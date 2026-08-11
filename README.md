@@ -3,7 +3,7 @@ id: nsip-readme
 type: semantic
 created: 2026-02-07T14:26:06-05:00
 namespace: nsip
-modified: '2026-08-11T17:20:28.084Z'
+modified: '2026-08-11T17:59:14.628Z'
 title: "`nsip`"
 provenance:
   '@type': Provenance
