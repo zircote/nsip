@@ -3,7 +3,7 @@ id: nsip-readme
 type: semantic
 created: 2026-02-07T14:26:06-05:00
 namespace: nsip
-modified: '2026-08-11T16:21:36.318Z'
+modified: '2026-08-11T17:20:28.084Z'
 title: "`nsip`"
 provenance:
   '@type': Provenance
@@ -350,8 +350,8 @@ This template includes production-ready workflows:
 2. Run `gh workflow run "Release PR" -f version=X.Y.Z`, get it reviewed, and merge it into `main`.
 3. Tag the `main` merge commit and push the tag:
    ```bash
-   git tag -a v0.6.0 -m "Release v0.6.0"
-   git push origin v0.6.0
+   git tag -a vX.Y.Z -m "Release vX.Y.Z"
+   git push origin vX.Y.Z
    ```
 4. The tag triggers workflows that automatically:
    - Generate the changelog
