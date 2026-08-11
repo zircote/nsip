@@ -218,11 +218,7 @@ pub fn list_resources() -> ListResourcesResult {
             ),
     ];
 
-    ListResourcesResult {
-        meta: None,
-        resources,
-        next_cursor: None,
-    }
+    ListResourcesResult::with_all_items(resources)
 }
 
 /// Build the list of resource templates.
@@ -249,11 +245,7 @@ pub fn list_resource_templates() -> ListResourceTemplatesResult {
             .with_mime_type("application/json"),
     ];
 
-    ListResourceTemplatesResult {
-        meta: None,
-        resource_templates: templates,
-        next_cursor: None,
-    }
+    ListResourceTemplatesResult::with_all_items(templates)
 }
 
 /// Helper to create a JSON text resource content entry.

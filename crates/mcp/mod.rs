@@ -21,9 +21,9 @@ use rmcp::{
     ErrorData as McpError, ServerHandler,
     handler::server::router::tool::ToolRouter,
     model::{
-        GetPromptRequestParams, GetPromptResult, ListPromptsResult, ListResourceTemplatesResult,
+        GetPromptRequestParams, GetPromptResponse, ListPromptsResult, ListResourceTemplatesResult,
         ListResourcesResult, PaginatedRequestParams, ProtocolVersion, ReadResourceRequestParams,
-        ReadResourceResult, ServerCapabilities, ServerInfo, SubscribeRequestParams,
+        ReadResourceResponse, ServerCapabilities, ServerInfo, SubscribeRequestParams,
         UnsubscribeRequestParams,
     },
     service::{NotificationContext, RequestContext},
@@ -159,9 +159,8 @@ impl ServerHandler for NsipServer {
         let cursor = request.as_ref().and_then(|r| r.cursor.as_deref());
         let (page, next_cursor) = paginate(&all.prompts, cursor, DEFAULT_PAGE_SIZE)?;
         Ok(ListPromptsResult {
-            meta: None,
             next_cursor,
-            prompts: page,
+            ..ListPromptsResult::with_all_items(page)
         })
     }
 
@@ -169,7 +168,7 @@ impl ServerHandler for NsipServer {
         &self,
         request: GetPromptRequestParams,
         context: RequestContext<rmcp::service::RoleServer>,
-    ) -> Result<GetPromptResult, McpError> {
+    ) -> Result<GetPromptResponse, McpError> {
         let arguments: HashMap<String, String> = request
             .arguments
             .unwrap_or_default()
@@ -183,7 +182,9 @@ impl ServerHandler for NsipServer {
             })
             .collect();
 
-        prompts::get_prompt(&self.client, &request.name, &arguments, Some(&context)).await
+        prompts::get_prompt(&self.client, &request.name, &arguments, Some(&context))
+            .await
+            .map(Into::into)
     }
 
     // -- Resources -------------------------------------------------------------
@@ -197,9 +198,8 @@ impl ServerHandler for NsipServer {
         let cursor = request.as_ref().and_then(|r| r.cursor.as_deref());
         let (page, next_cursor) = paginate(&all.resources, cursor, DEFAULT_PAGE_SIZE)?;
         Ok(ListResourcesResult {
-            meta: None,
             next_cursor,
-            resources: page,
+            ..ListResourcesResult::with_all_items(page)
         })
     }
 
@@ -212,9 +212,8 @@ impl ServerHandler for NsipServer {
         let cursor = request.as_ref().and_then(|r| r.cursor.as_deref());
         let (page, next_cursor) = paginate(&all.resource_templates, cursor, DEFAULT_PAGE_SIZE)?;
         Ok(ListResourceTemplatesResult {
-            meta: None,
             next_cursor,
-            resource_templates: page,
+            ..ListResourceTemplatesResult::with_all_items(page)
         })
     }
 
@@ -222,8 +221,10 @@ impl ServerHandler for NsipServer {
         &self,
         request: ReadResourceRequestParams,
         _context: RequestContext<rmcp::service::RoleServer>,
-    ) -> Result<ReadResourceResult, McpError> {
-        resources::read_resource(&self.client, &request).await
+    ) -> Result<ReadResourceResponse, McpError> {
+        resources::read_resource(&self.client, &request)
+            .await
+            .map(Into::into)
     }
 
     // -- Lifecycle -------------------------------------------------------------
