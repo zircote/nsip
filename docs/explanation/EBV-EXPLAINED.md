@@ -3,9 +3,17 @@ id: nsip-docs-explanation-ebv-explained
 type: semantic
 created: 2026-02-16T19:14:55Z
 namespace: nsip/docs/explanation
-modified: 2026-06-01T23:16:34-04:00
+modified: '2026-08-11T19:06:50.439Z'
 title: "Understanding Estimated Breeding Values (EBVs)"
 diataxis_type: explanation
+provenance:
+  '@type': Provenance
+  agent: claude-code/claude-sonnet-5
+  wasGeneratedBy:
+    '@id': urn:mif:activity:claude-code-session:f2ea9348-10db-44af-9ccb-a37844b8c1f2
+    '@type': prov:Activity
+  trustLevel: user_stated
+  agentVersion: 2.1.227
 ---
 
 # Understanding Estimated Breeding Values (EBVs)
@@ -56,14 +64,16 @@ Birth weight is unusual: lower EBVs are generally preferred because heavier birt
 
 ### Carcass Traits
 
-Carcass traits are standardized to a reference body weight of 55 kg (121 lbs) to allow fair comparison across animals measured at different weights.
+Post-weaning carcass traits are standardized to a reference body weight of 55 kg (121 lbs) to allow fair comparison across animals measured at different weights.
 
 | Abbreviation | Trait | Unit | Selection Direction |
 |---|---|---|---|
 | PFAT | Post-Weaning Fat | mm | Moderate preferred (breed-dependent) |
 | PEMD | Post-Weaning Eye Muscle Depth | mm | Higher preferred |
+| YFAT | Yearling Fat | mm | Moderate preferred (breed-dependent) |
+| YEMD | Yearling Eye Muscle Depth | mm | Higher preferred |
 
-Eye muscle depth measures the loin muscle cross-section and correlates with lean meat yield. Fat depth is measured as subcutaneous fat thickness via ultrasound -- lower values indicate leaner carcasses, though the preferred direction is breed- and market-dependent (terminal programmes often weight PFAT negatively, while some markets reward finish). NSIP also provides a **Carcass Plus** composite that combines PEMD, PFAT, and PWWT into a single carcass merit value.
+Eye muscle depth measures the loin muscle cross-section and correlates with lean meat yield. Fat depth is measured as subcutaneous fat thickness via ultrasound -- lower values indicate leaner carcasses, though the preferred direction is breed- and market-dependent (terminal programmes often weight PFAT negatively, while some markets reward finish). **YEMD and YFAT** are the same ultrasound scans repeated at yearling age rather than post-weaning, and follow the same selection-direction logic as PEMD and PFAT respectively. NSIP also provides a **Carcass Plus** composite that combines PEMD, PFAT, and PWWT into a single carcass merit value.
 
 ### Reproduction Traits
 
