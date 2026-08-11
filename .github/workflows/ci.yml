@@ -195,18 +195,27 @@ jobs:
             exit 0
           fi
 
-          # Isolate the github-actions ecosystem update block (the second
-          # entry under `updates:`, ending before the top-level `version:`
-          # key) and pull its exclude-paths glob patterns out of it. This
-          # assumes dependabot.yml's current 2-space block-sequence style
-          # (list items at the same indent as their key); a reformat needs
-          # a matching update here.
-          block=$(awk '
-            /^version:/ { exit }
-            /^- commit-message:/ { c++ }
-            c==2 { print }
-          ' .github/dependabot.yml)
+          # Locate the update block containing `package-ecosystem:
+          # github-actions` by line number, independent of its position or
+          # ordering among the `updates:` entries, then take everything from
+          # that entry's `- ` start line up to (but not including) the next
+          # top-level `- ` entry or EOF.
+          gha_line=$(grep -n '^  package-ecosystem: github-actions$' .github/dependabot.yml | head -1 | cut -d: -f1)
+          if [ -z "$gha_line" ]; then
+            echo "ERROR: no package-ecosystem: github-actions entry found in .github/dependabot.yml" >&2
+            exit 1
+          fi
+          start_line=$(awk -v n="$gha_line" 'NR<=n && /^- /{s=NR} END{print s+0}' .github/dependabot.yml)
+          end_line=$(awk -v n="$gha_line" 'NR>n && /^- /{print NR; exit}' .github/dependabot.yml)
+          if [ -z "$end_line" ]; then
+            end_line=$(($(wc -l < .github/dependabot.yml) + 1))
+          fi
+          block=$(sed -n "${start_line},$((end_line - 1))p" .github/dependabot.yml)
 
+          # Pull the exclude-paths glob patterns out of that block. This
+          # assumes dependabot.yml's current 2-space block-sequence style
+          # (list items at the same indent as their key); a reformat needs a
+          # matching update here.
           patterns=$(awk '
             /^  exclude-paths:/ { grab=1; next }
             grab && /^  - / { print; next }
