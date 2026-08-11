@@ -5,7 +5,101 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [Unreleased]
+## [0.7.4] - 2026-08-11
+
+### Documentation
+
+- Bring docs/ and README.md into MIF compliance (#359)
+- Resolve DEPLOYMENT.md / RELEASING.md release-procedure duplication (#366)
+- Add YEMD/YFAT coverage to explanation docs, fix trait count heading (#367)
+- **mcp**: Document elicitation and cursor-based list pagination (#368)
+- **mcp**: Correct elicitation delivery claims from PR #368 review (#389)
+- Correct PEMD description and document the trait-coverage guard (#391)
+- **ci**: Document the docker/login-action tag-resolution quirk (#394)
+- Fix RELEASING.md's stale secrets cross-reference to DEPLOYMENT.md (#400)
+
+### Fixed
+
+- **ci**: Hardcode homebrew tap owner to zircote (#328)
+- **security**: Bump yanked spin 0.9.8 to 0.9.9 (#360)
+- **ci**: Port the no-op Approve PR removal (#336) from main to develop (#361)
+- **ci**: Re-pin docker/login-action to tagged v4.6.0 release (#365)
+- **ci**: Scope dependabot's gh-aw ignore to generated lock files by path (#369)
+- **fmt**: Reformat docs_trait_coverage_test.rs to satisfy rustfmt (#388)
+- **ci**: Match dependabot exclude-paths with path-aware globs (#392)
+- **ci**: Add cooldown period to both dependabot ecosystem entries (#386)
+- Remove no-op Approve PR step from dependabot automerge (#336)
+
+### Miscellaneous
+
+- **deps**: Bump dtolnay/rust-toolchain (#334)
+- **deps**: Bump zircote/.github/.github/workflows/verify-attestation.yml (#333)
+- **deps**: Bump zircote/.github/.github/workflows/sign-and-attest.yml (#332)
+- **deps**: Bump docker/setup-buildx-action (#331)
+- **deps**: Bump the github-actions group with 5 updates (#330)
+- **deps**: Bump uuid from 1.23.4 to 1.23.5 (#329)
+- **deps**: Bump thiserror from 2.0.18 to 2.0.19 (#339)
+- **deps**: Bump tokio from 1.52.3 to 1.53.0 in the async-runtime group (#337)
+- **deps**: Bump regex from 1.13.0 to 1.13.1 (#341)
+- **deps**: Bump uuid from 1.23.5 to 1.24.0 (#342)
+- **deps**: Bump toml from 1.1.2+spec-1.1.0 to 1.1.3+spec-1.1.0 (#343)
+- **deps**: Bump futures from 0.3.32 to 0.3.33 (#344)
+- **deps**: Bump docker/login-action (#346)
+- **deps**: Bump zircote/.github/.github/workflows/pin-check.yml (#347)
+- **deps**: Bump zircote/.github/.github/workflows/reusable-trivy.yml (#348)
+- **deps**: Bump actions/setup-node from 6.4.0 to 7.0.0 (#349)
+- **deps**: Bump jsonwebtoken from 10.4.0 to 11.0.0 (#350)
+- **deps**: Bump base64 from 0.22.1 to 0.23.0 (#352)
+- **deps**: Bump the github-actions group across 1 directory with 4 updates (#354)
+- **deps**: Bump the serde-ecosystem group with 2 updates (#338)
+- **deps**: Bump clap from 4.6.1 to 4.6.4 (#351)
+- **deps**: Bump tokio from 1.53.0 to 1.53.1 in the async-runtime group (#371)
+- **deps**: Bump base64 from 0.23.0 to 0.23.1 (#372)
+- **deps**: Bump clap_complete from 4.6.7 to 4.6.9 (#374)
+- **deps**: Bump thiserror from 2.0.19 to 2.0.20 (#376)
+- **deps**: Bump clap_mangen from 0.3.0 to 0.3.2 (#377)
+- **deps**: Bump toml from 1.1.3+spec-1.1.0 to 1.1.4+spec-1.1.0 (#379)
+- **deps**: Bump zircote/.github/.github/workflows/pin-check.yml (#380)
+- **deps**: Bump schemars from 1.2.1 to 1.2.2 (#373)
+- **deps**: Bump zircote/.github/.github/workflows/verify-attestation.yml (#382)
+- **deps**: Bump zircote/.github/.github/workflows/reusable-attest-scan.yml (#383)
+- **deps**: Bump zircote/.github/.github/workflows/reusable-sca-osv.yml (#384)
+- **deps**: Bump dtolnay/rust-toolchain (#381)
+- **deps**: Bump rmcp from 2.2.0 to 3.1.2 (#375)
+- **deps**: Bump actions/stale from 10.4.0 to 11.0.0 (#395)
+- **deps**: Bump zircote/.github/.github/workflows/reusable-scorecard.yml (#396)
+- **deps**: Bump gitleaks/gitleaks-action (#397)
+- **deps**: Bump zircote/.github/.github/workflows/reusable-trivy.yml (#399)
+- **deps**: Bump zircote/.github/.github/workflows/reusable-sast-codeql.yml from 740cb8efb57af0187f88e9b4f939355b871a5895 to 229e6e6887c2493d43020b934983259361f2cc1b (#398)
+- Bump version to 0.7.4 (#401)
+
+## [0.7.3] - 2026-07-12
+
+### Documentation
+
+- Update CHANGELOG.md for v0.7.2
+
+### Fixed
+
+- **deps**: Resolve RUSTSEC-2026-0190 and RUSTSEC-2026-0185
+- **mcp**: Drop deprecated logging capability (SEP-2577) (#324)
+
+### Miscellaneous
+
+- **deps**: Bump the github-actions group with 4 updates (#305)
+- **deps**: Bump uuid from 1.23.3 to 1.23.4 (#311)
+- **deps**: Bump clap_complete from 4.6.5 to 4.6.7 (#313)
+- **deps**: Bump rand from 0.10.1 to 0.10.2 (#315)
+- **deps**: Bump zircote/.github/.github/workflows/reusable-scorecard.yml (#321)
+- **deps**: Update zircote/.github/.github/workflows/reusable-attest-scan.yml requirement to 5a805176eb4f3f22cba7bb0a25d46dc7306872e3 (#320)
+- **deps**: Bump zircote/.github/.github/workflows/pin-check.yml (#319)
+- **deps**: Bump regex from 1.12.4 to 1.13.0 (#316)
+- **deps**: Bump rmcp from 1.7.0 to 2.2.0 (#317)
+- **deps**: Update zircote/.github/.github/workflows/reusable-trivy.yml requirement to 5a805176eb4f3f22cba7bb0a25d46dc7306872e3 (#318)
+- **deps**: Bump actions/checkout from 6.0.3 to 7.0.0 (#307)
+- Bump version to 0.7.3 (#325)
+
+## [0.7.2] - 2026-06-18
 
 ### Documentation
 
@@ -423,7 +517,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **deps**: Bump github/codeql-action from 3 to 4 (#6)
 - **deps**: Bump actions/github-script from 7.0.1 to 8.0.0 (#4)
 
-[unreleased]: https://github.com/zircote/nsip/compare/v0.7.1..HEAD
+[0.7.4]: https://github.com/zircote/nsip/compare/v0.7.3..v0.7.4
+[0.7.3]: https://github.com/zircote/nsip/compare/v0.7.2..v0.7.3
+[0.7.2]: https://github.com/zircote/nsip/compare/v0.7.1..v0.7.2
 [0.7.1]: https://github.com/zircote/nsip/compare/v0.7.0..v0.7.1
 [0.7.0]: https://github.com/zircote/nsip/compare/v0.6.2..v0.7.0
 [0.6.2]: https://github.com/zircote/nsip/compare/v0.6.1..v0.6.2
