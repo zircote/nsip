@@ -3,7 +3,7 @@ id: nsip-docs-explanation-breed-groups-and-traits
 type: semantic
 created: 2026-02-16T17:53:10-05:00
 namespace: nsip/docs/explanation
-modified: '2026-08-11T19:13:18.303Z'
+modified: '2026-08-11T19:29:18.602Z'
 title: "Breed Groups and Traits"
 diataxis_type: explanation
 provenance:
@@ -114,7 +114,7 @@ Growth traits (BWT, WWT, MWWT, PWWT, YWT) are evaluated for virtually all breeds
 
 Post-weaning carcass traits are standardized to a reference body weight of **55 kg (121 lbs)** to allow fair comparison across animals measured at different weights.
 
-**Post-Weaning Eye Muscle Depth (PEMD)** measures the cross-sectional area of the longissimus dorsi (loin) muscle via ultrasound scanning, in mm. Higher PEMD indicates greater lean meat yield and is almost always desirable.
+**Post-Weaning Eye Muscle Depth (PEMD)** measures the depth of the longissimus dorsi (loin) muscle via ultrasound scanning, in mm. Higher PEMD indicates greater lean meat yield and is almost always desirable.
 
 **Post-Weaning Fat (PFAT)** measures subcutaneous fat thickness via ultrasound, in mm. The preferred direction is breed- and market-dependent: leaner carcasses suit many terminal markets, but some markets reward fat cover.
 
