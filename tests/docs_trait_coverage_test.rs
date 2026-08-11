@@ -93,8 +93,7 @@ fn canonical_traits_matches_ebv_glossary() {
         .collect();
 
     assert_eq!(
-        from_glossary,
-        CANONICAL_TRAITS,
+        from_glossary, CANONICAL_TRAITS,
         "CANONICAL_TRAITS should stay in sync with the canonical EBV glossary"
     );
 }
