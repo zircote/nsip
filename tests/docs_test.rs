@@ -45,6 +45,34 @@ fn releasing_runbook_links_back_to_deployment_guide() {
 }
 
 #[test]
+fn releasing_runbook_does_not_send_readers_back_for_secrets() {
+    // Regression guard for https://github.com/epicpast/nsip/issues/385:
+    // RELEASING.md's own back-pointer to DEPLOYMENT.md once described the
+    // overview it points at as covering "secrets", even though RELEASING.md
+    // is itself the authoritative source for required secrets (see its own
+    // "Required Secrets" table above). That sent a reader looking for
+    // secrets on a RELEASING.md -> DEPLOYMENT.md -> RELEASING.md loop.
+    //
+    // Scoped to the clause describing what DEPLOYMENT.md covers, not the
+    // whole paragraph: this file keeps a paragraph on one physical line, and
+    // that same paragraph legitimately says RELEASING.md itself covers
+    // secrets earlier in the sentence.
+    let releasing = read_doc("runbooks/RELEASING.md");
+    let link_marker = "](../DEPLOYMENT.md)";
+    let after_link = releasing
+        .split_once(link_marker)
+        .expect("releasing_runbook_links_back_to_deployment_guide already asserts this link exists")
+        .1;
+    let overview_clause = after_link.split('.').next().unwrap_or("");
+    assert!(
+        !overview_clause.to_lowercase().contains("secret"),
+        "docs/runbooks/RELEASING.md's pointer to docs/DEPLOYMENT.md must not \
+         claim DEPLOYMENT.md covers secrets -- RELEASING.md's own Required \
+         Secrets table is the authoritative source"
+    );
+}
+
+#[test]
 fn deployment_guide_does_not_duplicate_the_release_procedure() {
     let deployment = read_doc("DEPLOYMENT.md");
 
