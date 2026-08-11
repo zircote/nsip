@@ -397,6 +397,34 @@ mod tests {
         assert_eq!(info.protocol_version, ProtocolVersion::LATEST);
     }
 
+    /// Guards the documented claim (`docs/MCP.md`'s Pagination section and
+    /// `docs/reference/errors/mcp/invalid-cursor.md`) that `tools/list` has
+    /// no cursor-based pagination mechanism. The `#[tool_handler]` macro's
+    /// generated `list_tools` always delegates to `ToolRouter::list_all()`,
+    /// which takes no cursor argument at all and returns every enabled tool
+    /// in one page -- unlike `list_prompts`/`list_resources`/
+    /// `list_resource_templates` above, which route through this module's
+    /// `paginate()`. If a future change gives `ToolRouter` a cursor-aware
+    /// listing method, this test's tool count assertion (or the router
+    /// field access itself) breaks and should prompt a doc update.
+    #[test]
+    fn tools_list_has_no_pagination_mechanism() {
+        let server = NsipServer::new();
+        let all = server.tool_router.list_all();
+        assert_eq!(
+            all.len(),
+            13,
+            "expected all 13 tools with no tool-set filter"
+        );
+
+        let filtered = NsipServer::with_tool_sets(tool_sets::EnabledToolSets::from_csv("search"));
+        let filtered_all = filtered.tool_router.list_all();
+        assert!(
+            filtered_all.len() < all.len(),
+            "tool-set filtering happens at router construction, not at list time"
+        );
+    }
+
     // --- Paginate tests ---
 
     #[test]
