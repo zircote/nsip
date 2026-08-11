@@ -39,6 +39,12 @@ updates:
 - commit-message:
     prefix: chore(deps)
   directory: /
+  exclude-paths:
+  # gh-aw-generated workflows (gh aw compile). Every action embedded in these
+  # files -- not just github/gh-aw-actions/** -- is version-locked to the
+  # gh-aw compiler; dependabot hand-editing them would be silently reverted
+  # the next time someone runs `gh aw compile`. See #363.
+  - ".github/workflows/*.lock.yml"
   groups:
     github-actions:
       patterns:
@@ -47,7 +53,10 @@ updates:
       - minor
       - patch
   ignore:
-  - dependency-name: "github/gh-aw-actions/**" # Managed by gh aw compile. Version-locked to the gh-aw compiler; do not bump.
+  # Belt-and-suspenders alongside exclude-paths above: if github/gh-aw-actions
+  # is ever referenced outside a *.lock.yml file, it stays version-locked to
+  # the gh-aw compiler rather than bumped by dependabot.
+  - dependency-name: "github/gh-aw-actions/**"
   labels:
   - dependencies
   - github-actions
