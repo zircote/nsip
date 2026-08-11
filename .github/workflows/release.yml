@@ -462,7 +462,7 @@ jobs:
       contents: read
     # zircote/.github main @ 77a87549 (merged 2026-06-16)
     uses: >-
-      zircote/.github/.github/workflows/reusable-attest-scan.yml@5a805176eb4f3f22cba7bb0a25d46dc7306872e3
+      zircote/.github/.github/workflows/reusable-attest-scan.yml@229e6e6887c2493d43020b934983259361f2cc1b
     with:
       subject-name: ${{ needs.source.outputs.subject-name }}
       subject-digest: ${{ needs.source.outputs.subject-digest }}
@@ -479,7 +479,7 @@ jobs:
       contents: read
     # zircote/.github main @ 77a87549 (merged 2026-06-16)
     uses: >-
-      zircote/.github/.github/workflows/reusable-attest-scan.yml@5a805176eb4f3f22cba7bb0a25d46dc7306872e3
+      zircote/.github/.github/workflows/reusable-attest-scan.yml@229e6e6887c2493d43020b934983259361f2cc1b
     with:
       subject-name: ${{ needs.source.outputs.subject-name }}
       subject-digest: ${{ needs.source.outputs.subject-digest }}
