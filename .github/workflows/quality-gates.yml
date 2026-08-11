@@ -43,9 +43,10 @@ jobs:
       contents: read
       actions: read
       packages: read
-    # zircote/.github main @ 77a87549 (resolved 2026-06-16)
+    # zircote/.github main @ 6d55ba68 (resolved 2026-08-11; fixes the
+    # init/analyze codeql-action version skew from zircote/.github#506)
     uses: >-
-      zircote/.github/.github/workflows/reusable-sast-codeql.yml@229e6e6887c2493d43020b934983259361f2cc1b
+      zircote/.github/.github/workflows/reusable-sast-codeql.yml@6d55ba68dd1c7bff34e3b77a25d279949eb8a3bf
     with:
       languages: rust
       build-mode: none
