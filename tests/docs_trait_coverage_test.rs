@@ -10,14 +10,17 @@
 //! These tests read the explanation docs from disk and assert every
 //! canonical trait abbreviation is mentioned, so a future trait addition
 //! that updates the reference docs/code but not the explanation docs fails
-//! CI instead of drifting silently.
+//! CI instead of drifting silently. The canonical list itself is pinned to
+//! the code's own table by [`canonical_traits_matches_ebv_glossary`], so
+//! adding a trait to `EBV_TRAITS` without extending this guard also fails.
 
 use std::fs;
 use std::io;
 use std::path::PathBuf;
 
-/// Canonical trait abbreviations, mirrored from `crates/format.rs::TRAIT_ORDER`
-/// and `crates/mcp/resources.rs::glossary_content_has_all_sixteen_traits`.
+/// Canonical trait abbreviations, pinned to `crates/mcp/analytics.rs::EBV_TRAITS`
+/// by [`canonical_traits_matches_ebv_glossary`] and ordered to match
+/// `crates/format.rs::TRAIT_ORDER`.
 const CANONICAL_TRAITS: &[&str] = &[
     "BWT", "WWT", "PWWT", "YWT", "MWWT", "NLB", "NLW", "PEMD", "PFAT", "YEMD", "YFAT", "WFEC",
     "PFEC", "YFD", "YGFW", "YSL",
@@ -85,6 +88,11 @@ fn breed_groups_and_traits_heading_matches_canonical_count() {
     );
 }
 
+/// Pins [`CANONICAL_TRAITS`] to the code's own canonical table so the coverage
+/// guards above cannot silently fall behind it: adding, removing, renaming, or
+/// reordering a trait in `crates/mcp/analytics.rs::EBV_TRAITS` fails here until
+/// this list is updated too, which in turn forces the doc-coverage and heading
+/// assertions to be satisfied.
 #[test]
 fn canonical_traits_matches_ebv_glossary() {
     let from_glossary: Vec<&'static str> = nsip::mcp::analytics::ebv_glossary()
@@ -94,6 +102,8 @@ fn canonical_traits_matches_ebv_glossary() {
 
     assert_eq!(
         from_glossary, CANONICAL_TRAITS,
-        "CANONICAL_TRAITS should stay in sync with the canonical EBV glossary"
+        "CANONICAL_TRAITS should stay in sync with the canonical EBV glossary -- update \
+         this list, then the explanation docs and the trait count in the \
+         BREED-GROUPS-AND-TRAITS.md heading"
     );
 }
