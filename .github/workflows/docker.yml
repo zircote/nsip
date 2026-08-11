@@ -41,15 +41,15 @@ jobs:
             arch: arm64
     steps:
       - name: Checkout repository
-        uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0  # v7.0.0
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1  # v7.0.1
 
       - name: Set up Docker Buildx
         # yamllint disable-line rule:line-length
-        uses: docker/setup-buildx-action@c887d9748da14dcb42b11cf8bcc773b301ea55b5  # v3.9.0
+        uses: docker/setup-buildx-action@5b9cf3909b54a280b6df6eee035755eb1f2fd611  # v3.9.0
 
       - name: Log in to Container Registry
         # yamllint disable-line rule:line-length
-        uses: docker/login-action@3864d6aed8ff134b2ed894ce00c87695c709c870  # v3.4.0
+        uses: docker/login-action@c66a8fcb2472d4283042d726b2a061b43b3f49ab  # v4.3.0..v4.4.0 (dependabot SHA bump; no exact tag match)
         with:
           registry: ${{ env.REGISTRY }}
           username: ${{ github.actor }}
@@ -58,14 +58,14 @@ jobs:
       - name: Docker metadata (labels)
         id: meta
         # yamllint disable-line rule:line-length
-        uses: docker/metadata-action@80c7e94dd9b9319bd5eb7a0e0fe9291e23a2a2e9  # v6.1.0
+        uses: docker/metadata-action@dc802804100637a589fabce1cb79ff13a1411302  # v6.2.0
         with:
           images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
 
       - name: Build and push by digest
         id: build
         # yamllint disable-line rule:line-length
-        uses: docker/build-push-action@f9f3042f7e2789586610d6e8b85c8f03e5195baf  # v6.10.0
+        uses: docker/build-push-action@53b7df96c91f9c12dcc8a07bcb9ccacbed38856a  # v6.10.0
         with:
           context: .
           platforms: ${{ matrix.platform }}
@@ -115,11 +115,11 @@ jobs:
 
       - name: Set up Docker Buildx
         # yamllint disable-line rule:line-length
-        uses: docker/setup-buildx-action@c887d9748da14dcb42b11cf8bcc773b301ea55b5  # v3.9.0
+        uses: docker/setup-buildx-action@5b9cf3909b54a280b6df6eee035755eb1f2fd611  # v3.9.0
 
       - name: Log in to Container Registry
         # yamllint disable-line rule:line-length
-        uses: docker/login-action@3864d6aed8ff134b2ed894ce00c87695c709c870  # v3.4.0
+        uses: docker/login-action@c66a8fcb2472d4283042d726b2a061b43b3f49ab  # v4.3.0..v4.4.0 (dependabot SHA bump; no exact tag match)
         with:
           registry: ${{ env.REGISTRY }}
           username: ${{ github.actor }}
@@ -128,7 +128,7 @@ jobs:
       - name: Docker metadata (tags)
         id: meta
         # yamllint disable-line rule:line-length
-        uses: docker/metadata-action@80c7e94dd9b9319bd5eb7a0e0fe9291e23a2a2e9  # v6.1.0
+        uses: docker/metadata-action@dc802804100637a589fabce1cb79ff13a1411302  # v6.2.0
         with:
           images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
           tags: |
@@ -180,7 +180,7 @@ jobs:
       contents: read
     # zircote/.github main @ 515a4c76 (no-release-upload SBOM fix, 2026-06-17)
     uses: >-
-      zircote/.github/.github/workflows/sign-and-attest.yml@515a4c765d9df26954f59d3fe4ab003f56651205
+      zircote/.github/.github/workflows/sign-and-attest.yml@98cdea888a91e42874418e7173a265d6a546bc27
     with:
       image-name: ghcr.io/${{ github.repository }}
       image-digest: ${{ needs.merge.outputs.image-digest }}
@@ -195,7 +195,7 @@ jobs:
       contents: read
     # zircote/.github main @ 515a4c76 (2026-06-17)
     uses: >-
-      zircote/.github/.github/workflows/verify-attestation.yml@515a4c765d9df26954f59d3fe4ab003f56651205
+      zircote/.github/.github/workflows/verify-attestation.yml@98cdea888a91e42874418e7173a265d6a546bc27
     with:
       image-ref: >-
         ghcr.io/${{ github.repository }}@${{
@@ -218,7 +218,7 @@ jobs:
       packages: read
     # zircote/.github main @ 515a4c76 (adds ignore-unfixed input, 2026-06-17)
     uses: >-
-      zircote/.github/.github/workflows/reusable-trivy.yml@5a805176eb4f3f22cba7bb0a25d46dc7306872e3
+      zircote/.github/.github/workflows/reusable-trivy.yml@b2c87d254e899550e543bedea186335b48b9a41e
     with:
       image-ref: >-
         ghcr.io/${{ github.repository }}@${{
