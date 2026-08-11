@@ -3,9 +3,17 @@ id: nsip-docs-readme
 type: semantic
 created: 2026-02-07T14:26:06-05:00
 namespace: nsip/docs
-modified: 2026-06-12T10:25:52-04:00
+modified: '2026-08-11T19:08:59.355Z'
 title: "Documentation Index"
 diataxis_type: reference
+provenance:
+  '@type': Provenance
+  agent: claude-code/claude-sonnet-5
+  wasGeneratedBy:
+    '@id': urn:mif:activity:claude-code-session:f2ea9348-10db-44af-9ccb-a37844b8c1f2
+    '@type': prov:Activity
+  trustLevel: user_stated
+  agentVersion: 2.1.227
 ---
 
 # Documentation Index
@@ -173,7 +181,7 @@ Detailed reference material organized by topic.
 
 | Document | Description |
 |----------|-------------|
-| [Deployment Guide](DEPLOYMENT.md) | Comprehensive deployment instructions |
+| [Deployment Guide](DEPLOYMENT.md) | Deployment targets and distribution channels (GitHub Releases, Docker, crates.io) — for the release *procedure* itself, see [Releasing](runbooks/RELEASING.md) |
 
 ## Architectural Decision Records
 
