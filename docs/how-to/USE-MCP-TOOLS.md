@@ -3,9 +3,17 @@ id: nsip-docs-how-to-use-mcp-tools
 type: semantic
 created: 2026-02-16T17:53:10-05:00
 namespace: nsip/docs/how-to
-modified: 2026-06-01T23:16:34-04:00
+modified: '2026-08-11T19:11:51.097Z'
 title: "How to Use the MCP Server Tools"
 diataxis_type: how-to
+provenance:
+  '@type': Provenance
+  agent: claude-code/claude-sonnet-5
+  wasGeneratedBy:
+    '@id': urn:mif:activity:claude-code-session:f2ea9348-10db-44af-9ccb-a37844b8c1f2
+    '@type': prov:Activity
+  trustLevel: user_stated
+  agentVersion: 2.1.227
 ---
 
 # How to Use the MCP Server Tools
@@ -262,6 +270,10 @@ MCP prompts are pre-built workflows that fetch data and construct structured bre
 | `select-replacement`      | Find top replacement candidates                     | `breed_id`, `gender`, `target_trait` |
 | `interpret-ebvs`          | Plain-language EBV explanation                      | `lpn_id`                        |
 
+### Handling Elicitation Requests
+
+Four of the prompts above -- `compare-breeding-stock`, `plan-mating`, `flock-improvement`, `select-replacement` -- may send a follow-up request asking for optional extra context (e.g. "Which traits should the comparison focus on?") once you've supplied the required arguments. This only happens if your MCP client declared elicitation support at initialization: Claude Desktop and Claude Code show it as a form to fill in or skip. Clients that don't support elicitation, or a decline/cancel on the form, aren't errors -- the prompt still runs, just without that extra context. See [Elicitation](../MCP.md#elicitation) for the exact fields each prompt asks for.
+
 ---
 
 ## Step 8: Access Resources
@@ -277,6 +289,10 @@ nsip://status                -- Database status
 nsip://animal/{lpn_id}       -- Animal profile
 nsip://breed/{breed_id}/ranges -- Trait ranges for a breed
 ```
+
+### Paginating List Results
+
+If your client lists prompts, resources, or resource templates in pages, follow the `nextCursor` value from the response verbatim to fetch the next page -- don't construct your own cursor. Tool listings are never paginated; `nsip mcp` always returns the complete tool set in one response. See [Pagination](../MCP.md#pagination) for the full contract.
 
 ---
 
