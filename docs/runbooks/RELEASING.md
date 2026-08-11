@@ -3,7 +3,7 @@ id: nsip-docs-runbooks-releasing
 type: procedural
 created: 2026-02-07T14:26:06-05:00
 namespace: nsip/docs/runbooks
-modified: '2026-08-11T19:07:15.637Z'
+modified: '2026-08-11T20:13:56.295Z'
 title: "Releasing"
 diataxis_type: how-to
 provenance:
@@ -18,7 +18,7 @@ provenance:
 
 # Releasing
 
-End-to-end runbook for creating, monitoring, and rolling back releases of nsip. This is the authoritative procedure; see [`docs/DEPLOYMENT.md`](../DEPLOYMENT.md) for the broader deployment/distribution overview (Docker, package registries, secrets).
+End-to-end runbook for creating, monitoring, and rolling back releases of nsip. This is the authoritative procedure, including the required secrets and permissions below. See [`docs/DEPLOYMENT.md`](../DEPLOYMENT.md) for the broader deployment/distribution overview (Docker, package registries).
 
 ## Version Numbering (SemVer)
 
