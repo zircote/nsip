@@ -3,9 +3,17 @@ id: nsip-docs-explanation-breed-groups-and-traits
 type: semantic
 created: 2026-02-16T17:53:10-05:00
 namespace: nsip/docs/explanation
-modified: 2026-06-01T23:16:34-04:00
+modified: '2026-08-11T19:13:18.303Z'
 title: "Breed Groups and Traits"
 diataxis_type: explanation
+provenance:
+  '@type': Provenance
+  agent: claude-code/claude-sonnet-5
+  wasGeneratedBy:
+    '@id': urn:mif:activity:claude-code-session:f2ea9348-10db-44af-9ccb-a37844b8c1f2
+    '@type': prov:Activity
+  trustLevel: user_stated
+  agentVersion: 2.1.227
 ---
 
 # Breed Groups and Traits
@@ -88,7 +96,7 @@ The breed-level trait-ranges data is what reveals, in practice, which traits are
 
 ---
 
-## Understanding the 13 Traits in Context
+## Understanding the 16 Traits in Context
 
 ### Growth Traits: The Foundation
 
@@ -104,11 +112,13 @@ Growth traits (BWT, WWT, MWWT, PWWT, YWT) are evaluated for virtually all breeds
 
 ### Carcass Traits: Meeting Market Specifications
 
-Carcass traits are standardized to a reference body weight of **55 kg (121 lbs)** to allow fair comparison across animals measured at different weights.
+Post-weaning carcass traits are standardized to a reference body weight of **55 kg (121 lbs)** to allow fair comparison across animals measured at different weights.
 
 **Post-Weaning Eye Muscle Depth (PEMD)** measures the cross-sectional area of the longissimus dorsi (loin) muscle via ultrasound scanning, in mm. Higher PEMD indicates greater lean meat yield and is almost always desirable.
 
 **Post-Weaning Fat (PFAT)** measures subcutaneous fat thickness via ultrasound, in mm. The preferred direction is breed- and market-dependent: leaner carcasses suit many terminal markets, but some markets reward fat cover.
+
+**Yearling Eye Muscle Depth (YEMD)** and **Yearling Fat (YFAT)** are the same ultrasound scans as PEMD and PFAT -- loin muscle depth and subcutaneous fat thickness -- taken later, at yearling age rather than post-weaning. They carry the same selection-direction logic as their post-weaning counterparts: higher YEMD is preferred, and the preferred YFAT level is breed- and market-dependent. As with the growth traits measured at more than one stage (PWWT and YWT), expect an animal's post-weaning and yearling carcass scans to move together but not identically -- the yearling measurement adds later-stage information rather than simply repeating the earlier one.
 
 NSIP also provides a **Carcass Plus** composite that combines PEMD, PFAT, and PWWT into a single carcass merit value for simplified selection.
 
