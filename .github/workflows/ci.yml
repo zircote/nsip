@@ -195,47 +195,76 @@ jobs:
             exit 0
           fi
 
-          # Find the github-actions ecosystem update block and read its
-          # `exclude-paths` globs via a real YAML parser so this check doesn't
-          # depend on item ordering or indentation.
-          patterns=""
-          if ! patterns=$(ruby -ryaml -e '
-            cfg = YAML.load_file(ARGV[0])
-            gha = cfg.fetch("updates").find { |u| u["package-ecosystem"] == "github-actions" }
-            exclude = gha && gha["exclude-paths"]
-            exit 1 unless exclude.is_a?(Array) && !exclude.empty?
-            exclude.each { |p| puts p.to_s }
-          ' .github/dependabot.yml); then
-            patterns=""
-          fi
+          # Read the github-actions ecosystem block via a real YAML parser (so
+          # this check does not depend on item ordering or indentation) and
+          # match with File::FNM_PATHNAME, which stops `*` from crossing a `/`
+          # the way dependabot path globs do. Bash `[[ $f == $pattern ]]` lets
+          # `*` cross `/`, so a pattern like `*.lock.yml` -- which dependabot
+          # would NOT apply to a nested file -- reported a false pass.
+          # Exit codes: 2 = unreadable config, 3 = no exclude-paths, 4 = a
+          # generated lock file is not covered.
+          rc=0
+          # shellcheck disable=SC2016  # `#{}` below is Ruby interpolation.
+          ruby -ryaml -e '
+            cfg_path = ARGV.shift
+            begin
+              cfg = YAML.load_file(cfg_path)
+            rescue StandardError => e
+              warn "ERROR: could not parse #{cfg_path}: #{e.message}"
+              exit 2
+            end
+            updates = cfg.is_a?(Hash) ? cfg["updates"] : nil
+            gha = Array(updates).find do |u|
+              u.is_a?(Hash) && u["package-ecosystem"] == "github-actions"
+            end
+            exclude = gha.is_a?(Hash) ? gha["exclude-paths"] : nil
+            exit 3 unless exclude.is_a?(Array)
+            # `directory: /` invites a leading slash; dependabot treats these
+            # patterns as repo-relative, so normalize before matching rather
+            # than failing a correctly-configured repo.
+            patterns = exclude.map do |p|
+              p.to_s.sub(%r{\A\./}, "").sub(%r{\A/}, "")
+            end
+            patterns.reject!(&:empty?)
+            exit 3 if patterns.empty?
+            missing = false
+            ARGV.each do |path|
+              covered = patterns.any? do |pat|
+                File.fnmatch?(pat, path, File::FNM_PATHNAME)
+              end
+              if covered
+                puts "ok: #{path} is excluded from the dependabot scan"
+              else
+                msg = "MISSING: #{path} is gh-aw-generated but not "
+                msg += "covered by an exclude-paths pattern in #{cfg_path}"
+                warn msg
+                missing = true
+              end
+            end
+            exit(missing ? 4 : 0)
+          ' .github/dependabot.yml "${generated_files[@]}" || rc=$?
 
-          missing=0
-          if [ -z "$patterns" ]; then
-            echo "ERROR: no exclude-paths patterns found in the github-actions ecosystem block of .github/dependabot.yml" >&2
-            missing=1
-          fi
-
-          for f in "${generated_files[@]}"; do
-            covered=0
-            while IFS= read -r pattern; do
-              [ -z "$pattern" ] && continue
-              # shellcheck disable=SC2053
-              if [[ "$f" == $pattern ]]; then
-                covered=1
-              fi
-            done <<<"$patterns"
-            if [ "$covered" -eq 1 ]; then
-              echo "ok: $f is excluded from dependabot's github-actions scan"
-            else
-              echo "MISSING: $f is gh-aw-generated but not covered by any exclude-paths pattern in .github/dependabot.yml" >&2
-              missing=1
-            fi
-          done
-
-          if [ "$missing" -ne 0 ]; then
-            echo "dependabot.yml is missing exclude-paths coverage for a gh-aw-generated lock file (nsip#363)." >&2
-            exit 1
-          fi
+          case "$rc" in
+            0) ;;
+            2)
+              echo "ERROR: dependabot.yml is not valid YAML (see above)." >&2
+              exit 1
+              ;;
+            3)
+              echo "ERROR: no exclude-paths in the github-actions" \
+                   "ecosystem block of .github/dependabot.yml" >&2
+              exit 1
+              ;;
+            4)
+              echo "dependabot.yml is missing exclude-paths coverage for" \
+                   "a gh-aw-generated lock file (nsip#363)." >&2
+              exit 1
+              ;;
+            *)
+              echo "ERROR: exclude-paths check failed (ruby exited $rc)" >&2
+              exit 1
+              ;;
+          esac
 
   msrv:
     name: MSRV Check
