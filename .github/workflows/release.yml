@@ -428,7 +428,7 @@ jobs:
       pull-requests: write
     # zircote/.github main @ 77a87549 (merged 2026-06-16)
     uses: >-
-      zircote/.github/.github/workflows/reusable-sca-osv.yml@77a87549a65c6c978a0e87efe0168ed3517f7ca4
+      zircote/.github/.github/workflows/reusable-sca-osv.yml@229e6e6887c2493d43020b934983259361f2cc1b
     with:
       fail-on-severity: high
       # --config applies the shared ignore policy (osv-scanner.toml) that
