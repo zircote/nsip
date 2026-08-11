@@ -397,18 +397,25 @@ mod tests {
         assert_eq!(info.protocol_version, ProtocolVersion::LATEST);
     }
 
-    /// Guards the documented claim (`docs/MCP.md`'s Pagination section and
-    /// `docs/reference/errors/mcp/invalid-cursor.md`) that `tools/list` has
-    /// no cursor-based pagination mechanism. The `#[tool_handler]` macro's
-    /// generated `list_tools` always delegates to `ToolRouter::list_all()`,
-    /// which takes no cursor argument at all and returns every enabled tool
-    /// in one page -- unlike `list_prompts`/`list_resources`/
-    /// `list_resource_templates` above, which route through this module's
-    /// `paginate()`. If a future change gives `ToolRouter` a cursor-aware
-    /// listing method, this test's tool count assertion (or the router
-    /// field access itself) breaks and should prompt a doc update.
+    /// Guards the tool-list shape that `docs/MCP.md`'s Pagination section and
+    /// `docs/reference/errors/mcp/invalid-cursor.md` describe: every enabled
+    /// tool comes back from a single `ToolRouter::list_all()` call, and the
+    /// `--tools` filter is applied when the router is built rather than when
+    /// the list is served.
+    ///
+    /// What this asserts is the documented tool count and the
+    /// construction-time filtering -- *not* the absence of a cursor
+    /// parameter. The `#[tool_handler]` macro generates `list_tools` with its
+    /// `PaginatedRequestParams` argument bound to `_request` and `next_cursor`
+    /// hardcoded to `None`, so no cursor can ever reach this module's
+    /// `paginate()` the way `list_prompts`/`list_resources`/
+    /// `list_resource_templates` above do; reaching that generated handler
+    /// from a test would need a live `Peer` for its `RequestContext`, which a
+    /// unit test cannot build. So a future change that routes `tools/list`
+    /// through `paginate()` would leave this test passing while invalidating
+    /// both docs -- update them alongside any such change.
     #[test]
-    fn tools_list_has_no_pagination_mechanism() {
+    fn tools_list_returns_every_enabled_tool_in_one_call() {
         let server = NsipServer::new();
         let all = server.tool_router.list_all();
         assert_eq!(

@@ -3,7 +3,7 @@ id: nsip-docs-mcp
 type: semantic
 created: 2026-02-07T23:47:38-05:00
 namespace: nsip/docs
-modified: '2026-08-11T19:11:33.597Z'
+modified: '2026-08-11T19:29:43.700Z'
 title: "NSIP MCP Server Reference"
 diataxis_type: reference
 provenance:
@@ -726,7 +726,7 @@ Plain-language EBV explanation. Fetches the animal's details and the full EBV gl
 
 ## Elicitation
 
-Four of the seven guided prompts -- [`compare-breeding-stock`](#compare-breeding-stock), [`plan-mating`](#plan-mating), [`flock-improvement`](#flock-improvement), and [`select-replacement`](#select-replacement) -- send a follow-up [MCP elicitation](https://modelcontextprotocol.io/specification/2025-11-25/client/elicitation) request after their required arguments resolve, asking the user for optional extra context before the prompt's data is assembled.
+Four of the seven guided prompts -- [`compare-breeding-stock`](#compare-breeding-stock), [`plan-mating`](#plan-mating), [`flock-improvement`](#flock-improvement), and [`select-replacement`](#select-replacement) -- send a follow-up [MCP elicitation](https://modelcontextprotocol.io/specification/2025-11-25/client/elicitation) request once their required arguments resolve, asking the user for optional extra context that steers the analysis. Where in the prompt the request is sent varies -- `compare-breeding-stock` and `select-replacement` elicit before fetching any data, while `plan-mating` and `flock-improvement` elicit after their API calls complete. Each prompt's entry under [Prompt Reference](#prompt-reference) states which.
 
 Elicitation is a **client** capability, not a server one: `get_info()` only declares `tools`, `prompts`, and `resources` in `ServerCapabilities`. The server issues an `elicitation/create` request over the existing session, and it only reaches the user if the client declared the `elicitation` capability at initialize.
 
@@ -782,7 +782,7 @@ Elicitation message: *"Any selection criteria? (minimum accuracy, priority trait
 | `min_accuracy`    | integer | no       | Minimum accuracy percentage to require (0-100)     |
 | `priority_traits` | string  | no       | Comma-separated priority traits (e.g. `"WWT,NLB"`) |
 
-Elicited values, when provided, are folded into the prompt's `user_constraints` / `user_context` / `user_criteria` JSON block alongside the fetched animal data. They steer the LLM's analysis; they never change which API calls the prompt itself makes.
+Elicited values, when provided, reach the LLM in one of two ways. `plan-mating`, `flock-improvement`, and `select-replacement` fold them into a `user_constraints` / `user_context` / `user_criteria` key in the JSON block alongside the fetched animal data; `compare-breeding-stock` instead appends the requested traits to its instruction text as a "Focus especially on these traits" line, with no `user_*` key. Either way they only steer the LLM's analysis -- they never change which API calls the prompt itself makes.
 
 ---
 
