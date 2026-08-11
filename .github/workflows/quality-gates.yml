@@ -45,7 +45,7 @@ jobs:
       packages: read
     # zircote/.github main @ 77a87549 (resolved 2026-06-16)
     uses: >-
-      zircote/.github/.github/workflows/reusable-sast-codeql.yml@740cb8efb57af0187f88e9b4f939355b871a5895
+      zircote/.github/.github/workflows/reusable-sast-codeql.yml@229e6e6887c2493d43020b934983259361f2cc1b
     with:
       languages: rust
       build-mode: none
