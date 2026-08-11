@@ -1,6 +1,13 @@
 ---
+id: nsip-docs-how-to-compare-animals
+type: semantic
+created: 2026-02-16T19:14:55Z
+namespace: nsip/docs/how-to
+modified: 2026-06-01T23:16:34-04:00
+title: "How to Compare Animals"
 diataxis_type: how-to
 ---
+
 # How to Compare Animals
 
 > **Problem:** You need to compare EBV traits across multiple animals to inform breeding or selection decisions.

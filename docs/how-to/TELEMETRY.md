@@ -1,6 +1,13 @@
 ---
+id: nsip-docs-how-to-telemetry
+type: semantic
+created: 2026-03-09T10:36:07-04:00
+namespace: nsip/docs/how-to
+modified: 2026-03-10T14:36:31Z
+title: "How to Enable and Use Telemetry"
 diataxis_type: how-to
 ---
+
 # How to Enable and Use Telemetry
 
 > **Problem:** You want structured, machine-readable logs from the NSIP MCP server with W3C trace context so you can correlate log lines across a single request/response cycle.

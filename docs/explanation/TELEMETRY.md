@@ -1,6 +1,13 @@
 ---
+id: nsip-docs-explanation-telemetry
+type: semantic
+created: 2026-03-09T10:36:07-04:00
+namespace: nsip/docs/explanation
+modified: 2026-03-10T14:36:31Z
+title: "Telemetry and Distributed Tracing"
 diataxis_type: explanation
 ---
+
 # Telemetry and Distributed Tracing
 
 > Why the NSIP MCP server includes an optional telemetry system, how distributed tracing works, and the design decisions behind the implementation.

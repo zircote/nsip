@@ -1,6 +1,13 @@
 ---
+id: nsip-docs-template-customization
+type: semantic
+created: 2026-02-07T14:26:06-05:00
+namespace: nsip/docs/template
+modified: 2026-06-01T23:16:34-04:00
+title: "Customization Guide"
 diataxis_type: how-to
 ---
+
 # Customization Guide
 
 This guide covers how to customize the `nsip` beyond the initial setup. For basic configuration (renaming the crate, updating metadata), see the main README.

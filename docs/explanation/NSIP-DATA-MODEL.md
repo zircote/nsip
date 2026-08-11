@@ -1,6 +1,13 @@
 ---
+id: nsip-docs-explanation-nsip-data-model
+type: semantic
+created: 2026-02-16T17:53:10-05:00
+namespace: nsip/docs/explanation
+modified: 2026-06-01T23:16:34-04:00
+title: "NSIP Data Model"
 diataxis_type: explanation
 ---
+
 # NSIP Data Model
 
 > How the NSIP Search API organizes sheep genetic evaluation data, from breed groups down to individual trait values.

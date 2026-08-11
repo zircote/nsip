@@ -1,6 +1,21 @@
 ---
+id: nsip-docs-reference-configuration
+type: semantic
+created: 2026-02-16T17:53:10-05:00
+namespace: nsip/docs/reference
+modified: '2026-08-11T16:10:52.926Z'
+title: "Configuration Reference"
 diataxis_type: reference
+provenance:
+  '@type': Provenance
+  agent: claude-code/claude-sonnet-5
+  wasGeneratedBy:
+    '@id': urn:mif:activity:claude-code-session:f2ea9348-10db-44af-9ccb-a37844b8c1f2
+    '@type': prov:Activity
+  trustLevel: user_stated
+  agentVersion: 2.1.227
 ---
+
 # Configuration Reference
 
 Complete reference for configuring the `nsip` CLI and library.
@@ -149,7 +164,7 @@ Optional:
 
 When compiled with `--features telemetry`, the server logs in JSON format with W3C trace context (`trace_id`, `span_id`). Default build uses plain text tracing.
 
-### Client Configuration
+### MCP Client Configuration
 
 #### Claude Code (`.mcp.json`)
 

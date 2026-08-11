@@ -1,6 +1,13 @@
 ---
+id: nsip-docs-runbooks-dependency-updates
+type: procedural
+created: 2026-02-07T14:26:06-05:00
+namespace: nsip/docs/runbooks
+modified: 2026-03-10T17:32:23Z
+title: "Dependency Updates"
 diataxis_type: how-to
 ---
+
 # Dependency Updates
 
 Runbook for managing Cargo and GitHub Actions dependencies in nsip.

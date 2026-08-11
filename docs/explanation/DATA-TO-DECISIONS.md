@@ -1,6 +1,13 @@
 ---
+id: nsip-docs-explanation-data-to-decisions
+type: semantic
+created: 2026-02-16T17:53:10-05:00
+namespace: nsip/docs/explanation
+modified: 2026-06-01T23:16:34-04:00
+title: "From Data to Decisions"
 diataxis_type: explanation
 ---
+
 # From Data to Decisions
 
 > Why genetic evaluation data leads to better sheep breeding decisions, and how the numbers connect to the real-world choices a producer makes about sires, matings, and long-term flock improvement.

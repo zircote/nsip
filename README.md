@@ -1,3 +1,20 @@
+---
+id: nsip-readme
+type: semantic
+created: 2026-02-07T14:26:06-05:00
+namespace: nsip
+modified: '2026-08-11T16:21:36.318Z'
+title: "`nsip`"
+provenance:
+  '@type': Provenance
+  agent: claude-code/claude-sonnet-5
+  wasGeneratedBy:
+    '@id': urn:mif:activity:claude-code-session:f2ea9348-10db-44af-9ccb-a37844b8c1f2
+    '@type': prov:Activity
+  trustLevel: user_stated
+  agentVersion: 2.1.227
+---
+
 # `nsip`
 
 <picture>
@@ -165,6 +182,17 @@ nsip mcp
 | `Error` | Error type for operations |
 | `Result<T>` | Type alias for `Result<T, Error>` |
 
+## Documentation
+
+Full documentation lives under [`docs/`](docs/README.md), organized using the [Diataxis framework](https://diataxis.fr/):
+
+- [Getting Started Tutorial](docs/tutorials/GETTING-STARTED.md) - 15-minute hands-on introduction to the CLI and library
+- [MCP Server Reference](docs/MCP.md) - full API reference for the built-in MCP server
+- [CLI Reference](docs/reference/CLI.md) - every subcommand, flag, and option
+- [Library API Reference](docs/reference/LIBRARY-API.md) - types and methods for the `nsip` crate
+
+See [`docs/README.md`](docs/README.md) for the complete documentation index.
+
 ## MCP Integration
 
 The library includes MCP (Model Context Protocol) support for integration with AI assistants:
@@ -316,18 +344,23 @@ This template includes production-ready workflows:
 
 ### Creating a Release
 
-1. Update version in `Cargo.toml`
-2. Create and push a version tag:
+`develop` is the active development branch and `main` is the stable/release branch. **Never tag from `develop`** — promote the release through `main` first via the `Release PR` workflow. See [`docs/runbooks/RELEASING.md`](docs/runbooks/RELEASING.md) for the full step-by-step procedure; summary:
+
+1. Bump the version in `Cargo.toml` on `develop`.
+2. Run `gh workflow run "Release PR" -f version=X.Y.Z`, get it reviewed, and merge it into `main`.
+3. Tag the `main` merge commit and push the tag:
    ```bash
    git tag -a v0.6.0 -m "Release v0.6.0"
    git push origin v0.6.0
    ```
-3. Workflows automatically:
-   - Generate changelog
-   - Build binaries for all platforms
-   - Create GitHub release with artifacts
+4. The tag triggers workflows that automatically:
+   - Generate the changelog
+   - Build and attest binaries for all platforms
+   - Create the GitHub release with artifacts
    - Build and push Docker images
    - Publish to crates.io
+   - Update the Homebrew tap
+   - Back-merge `main` into `develop`
 
 ### AI Coding Agent
 

@@ -1,6 +1,21 @@
 ---
+id: nsip-docs-how-to-export-json
+type: semantic
+created: 2026-02-16T17:53:10-05:00
+namespace: nsip/docs/how-to
+modified: '2026-08-11T16:10:22.460Z'
+title: "How to Export Data as JSON"
 diataxis_type: how-to
+provenance:
+  '@type': Provenance
+  agent: claude-code/claude-sonnet-5
+  wasGeneratedBy:
+    '@id': urn:mif:activity:claude-code-session:f2ea9348-10db-44af-9ccb-a37844b8c1f2
+    '@type': prov:Activity
+  trustLevel: user_stated
+  agentVersion: 2.1.227
 ---
+
 # How to Export Data as JSON
 
 > **Problem:** You need to export NSIP animal data in JSON format for further processing, reporting, or integration with other tools.
@@ -20,7 +35,7 @@ Every CLI command supports the `--json` (or `-J`) global flag. Add it to any com
 nsip details 430735-0032 -J
 ```
 
-### Step 2: Export Search Results
+### Step 2: Export Search Results (CLI)
 
 ```bash
 nsip search --breed-id 486 --status CURRENT --sort-by WWT --reverse -J
@@ -95,7 +110,7 @@ async fn main() -> Result<(), nsip::Error> {
 }
 ```
 
-### Step 2: Export Search Results
+### Step 2: Export Search Results (Library)
 
 ```rust
 use nsip::{NsipClient, SearchCriteria};

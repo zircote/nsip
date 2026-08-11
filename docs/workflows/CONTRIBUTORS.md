@@ -1,6 +1,13 @@
 ---
+id: nsip-docs-workflows-contributors
+type: semantic
+created: 2026-03-11T18:02:11Z
+namespace: nsip/docs/workflows
+modified: 2026-03-11T18:02:11Z
+title: "Contributor Recognition Workflow"
 diataxis_type: reference
 ---
+
 # Contributor Recognition Workflow
 
 ## Overview

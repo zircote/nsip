@@ -1,4 +1,10 @@
 ---
+id: nsip-docs-how-to-mcp-tool-sets
+type: semantic
+created: 2026-03-09T10:36:07-04:00
+namespace: nsip/docs/how-to
+modified: 2026-06-01T23:16:34-04:00
+title: "How to Filter MCP Tool Sets"
 diataxis_type: how-to
 ---
 

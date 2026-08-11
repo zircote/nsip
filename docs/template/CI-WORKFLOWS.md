@@ -1,6 +1,13 @@
 ---
+id: nsip-docs-template-ci-workflows
+type: semantic
+created: 2026-02-07T14:26:06-05:00
+namespace: nsip/docs/template
+modified: 2026-06-12T10:25:52-04:00
+title: "CI/CD Workflows Reference"
 diataxis_type: reference
 ---
+
 # CI/CD Workflows Reference
 
 Comprehensive guide to every GitHub Actions workflow included in the

@@ -1,6 +1,13 @@
 ---
+id: nsip-docs-security-signed-releases
+type: semantic
+created: 2026-02-07T14:26:06-05:00
+namespace: nsip/docs/security
+modified: 2026-06-12T10:25:52-04:00
+title: "Release Attestations & Verification"
 diataxis_type: reference
 ---
+
 # Release Attestations & Verification
 
 ## Overview

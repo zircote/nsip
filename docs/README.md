@@ -1,6 +1,13 @@
 ---
+id: nsip-docs-readme
+type: semantic
+created: 2026-02-07T14:26:06-05:00
+namespace: nsip/docs
+modified: 2026-06-12T10:25:52-04:00
+title: "Documentation Index"
 diataxis_type: reference
 ---
+
 # Documentation Index
 
 > All documentation for the nsip project organized using the [Diataxis framework](https://diataxis.fr/).

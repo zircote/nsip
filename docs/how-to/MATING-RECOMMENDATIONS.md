@@ -1,4 +1,10 @@
 ---
+id: nsip-docs-how-to-mating-recommendations
+type: semantic
+created: 2026-03-09T10:36:07-04:00
+namespace: nsip/docs/how-to
+modified: 2026-06-01T23:16:34-04:00
+title: "How to Make Data-Driven Mating Decisions"
 diataxis_type: how-to
 ---
 
@@ -34,7 +40,7 @@ nsip compare 430735-0032 430735-0041 430735-0058 --traits BWT,WWT,YWT,PEMD,NLB
 
 Omit `--traits` to see all 16 EBV traits. Add `-J` for JSON output.
 
-### MCP
+### MCP (Compare)
 
 Call the `compare` tool with an array of LPN IDs:
 
@@ -58,7 +64,7 @@ The response includes each animal's EBV values aligned by trait, so you can spot
 
 Ranking lets you find the top-N animals in a breed according to your own trait priorities. You assign weights to traits: positive weights favor higher values, negative weights favor lower values.
 
-### MCP
+### MCP (Rank)
 
 Call the `rank` tool with your breed ID and a weights object:
 
@@ -99,7 +105,7 @@ Each animal's composite score is calculated as the sum of `(trait_value * weight
 
 Before committing to a mating, check whether the sire and dam share recent ancestors. The `inbreeding_check` tool computes Wright's coefficient of inbreeding (COI) by walking both pedigrees and finding common ancestors.
 
-### MCP
+### MCP (Inbreeding Check)
 
 Call the `inbreeding_check` tool with sire and dam LPN IDs:
 
@@ -152,7 +158,7 @@ In this example, the sire and dam share one grandparent (depth 2 on both sides),
 
 The `mating_recommendations` tool combines everything above into a single step: it searches the breed for potential mates, checks inbreeding for each candidate, and ranks them by trait complementarity.
 
-### MCP
+### MCP (Mating Recommendations)
 
 Call the `mating_recommendations` tool with the animal you want to find mates for:
 

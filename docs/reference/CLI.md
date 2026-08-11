@@ -1,6 +1,13 @@
 ---
+id: nsip-docs-reference-cli
+type: semantic
+created: 2026-02-16T17:53:10-05:00
+namespace: nsip/docs/reference
+modified: 2026-06-01T23:16:34-04:00
+title: "CLI Reference"
 diataxis_type: reference
 ---
+
 # CLI Reference
 
 Complete reference for the `nsip` command-line interface.

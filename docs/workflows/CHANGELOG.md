@@ -1,6 +1,13 @@
 ---
+id: nsip-docs-workflows-changelog
+type: semantic
+created: 2026-03-11T18:02:11Z
+namespace: nsip/docs/workflows
+modified: 2026-05-29T21:57:25-04:00
+title: "Changelog Workflow"
 diataxis_type: reference
 ---
+
 # Changelog Workflow
 
 ## Overview
