@@ -1,6 +1,13 @@
 ---
+id: nsip-docs-distribution-alternative-registries
+type: semantic
+created: 2026-02-07T14:26:06-05:00
+namespace: nsip/docs/distribution
+modified: 2026-06-01T23:16:34-04:00
+title: "Alternative Cargo Registries"
 diataxis_type: reference
 ---
+
 # Alternative Cargo Registries
 
 ## Overview

@@ -1,4 +1,10 @@
 ---
+id: nsip-docs-reference-mcp-server-configuration
+type: semantic
+created: 2026-03-09T10:36:07-04:00
+namespace: nsip/docs/reference
+modified: 2026-03-09T17:41:58Z
+title: "MCP Server Configuration Reference"
 diataxis_type: reference
 ---
 

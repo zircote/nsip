@@ -1,6 +1,13 @@
 ---
+id: nsip-docs-explanation-mcp-security
+type: semantic
+created: 2026-03-09T10:36:07-04:00
+namespace: nsip/docs/explanation
+modified: 2026-03-10T14:36:31Z
+title: "MCP Server Security Model"
 diataxis_type: explanation
 ---
+
 # MCP Server Security Model
 
 > This document explains the design decisions, trade-offs, and threat model behind the NSIP MCP server's authentication and transport security. It is understanding-oriented -- read this to learn *why* the security layer works the way it does, not *how* to configure it.

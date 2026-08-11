@@ -1,6 +1,13 @@
 ---
+id: nsip-docs-tutorials-interpreting-results
+type: semantic
+created: 2026-02-16T17:53:10-05:00
+namespace: nsip/docs/tutorials
+modified: 2026-06-01T23:16:34-04:00
+title: "Interpreting Results"
 diataxis_type: tutorial
 ---
+
 # Interpreting Results
 
 > **Learning Goal:** By the end of this tutorial, you will understand how to read the data returned by the NSIP API -- what EBV values mean, how to assess accuracy, how to read lineage data, and how to make sense of an animal's complete profile.

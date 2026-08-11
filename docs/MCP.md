@@ -1,6 +1,13 @@
 ---
+id: nsip-docs-mcp
+type: semantic
+created: 2026-02-07T23:47:38-05:00
+namespace: nsip/docs
+modified: 2026-06-01T23:16:34-04:00
+title: "NSIP MCP Server Reference"
 diataxis_type: reference
 ---
+
 # NSIP MCP Server Reference
 
 The `nsip` binary ships a built-in [Model Context Protocol](https://modelcontextprotocol.io/) (MCP) server that exposes the full NSIP Search API surface -- plus analytics-powered breeding intelligence -- to any MCP-compatible client (Claude Desktop, Claude Code, Cursor, etc.).

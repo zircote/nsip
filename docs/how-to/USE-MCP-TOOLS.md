@@ -1,6 +1,13 @@
 ---
+id: nsip-docs-how-to-use-mcp-tools
+type: semantic
+created: 2026-02-16T17:53:10-05:00
+namespace: nsip/docs/how-to
+modified: 2026-06-01T23:16:34-04:00
+title: "How to Use the MCP Server Tools"
 diataxis_type: how-to
 ---
+
 # How to Use the MCP Server Tools
 
 > **Problem:** You want to use the NSIP MCP server with an AI assistant (Claude Desktop, Claude Code, Cursor, etc.) to query sheep genetic data interactively.

@@ -1,6 +1,13 @@
 ---
+id: nsip-docs-workflows-docker
+type: semantic
+created: 2026-03-11T18:02:11Z
+namespace: nsip/docs/workflows
+modified: 2026-06-01T23:16:34-04:00
+title: "Docker Workflow"
 diataxis_type: reference
 ---
+
 # Docker Workflow
 
 ## Overview

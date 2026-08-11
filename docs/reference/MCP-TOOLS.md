@@ -1,6 +1,13 @@
 ---
+id: nsip-docs-reference-mcp-tools
+type: semantic
+created: 2026-02-16T17:53:10-05:00
+namespace: nsip/docs/reference
+modified: 2026-06-01T23:16:34-04:00
+title: "MCP Tools Reference"
 diataxis_type: reference
 ---
+
 # MCP Tools Reference
 
 Complete reference for the 13 tools exposed by the `nsip mcp` server.

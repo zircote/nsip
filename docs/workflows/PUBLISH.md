@@ -1,6 +1,13 @@
 ---
+id: nsip-docs-workflows-publish
+type: semantic
+created: 2026-03-11T18:02:11Z
+namespace: nsip/docs/workflows
+modified: 2026-06-12T10:25:52-04:00
+title: "Publish to crates.io Workflow"
 diataxis_type: reference
 ---
+
 # Publish to crates.io Workflow
 
 ## Overview

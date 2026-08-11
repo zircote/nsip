@@ -1,6 +1,13 @@
 ---
+id: nsip-docs-reference-error-envelope
+type: semantic
+created: 2026-06-01T14:57:18-04:00
+namespace: nsip/docs/reference
+modified: 2026-06-01T23:16:34-04:00
+title: "Error Envelope (RFC 9457 Problem Details)"
 diataxis_type: reference
 ---
+
 # Error Envelope (RFC 9457 Problem Details)
 
 `nsip` is a **dual-consumer** CLI: every error serves both the human at the

@@ -1,6 +1,13 @@
 ---
+id: nsip-docs-explanation-breed-groups-and-traits
+type: semantic
+created: 2026-02-16T17:53:10-05:00
+namespace: nsip/docs/explanation
+modified: 2026-06-01T23:16:34-04:00
+title: "Breed Groups and Traits"
 diataxis_type: explanation
 ---
+
 # Breed Groups and Traits
 
 > How NSIP organizes sheep breeds into evaluation groups, and which EBV traits are relevant to each group.

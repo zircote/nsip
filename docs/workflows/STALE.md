@@ -1,6 +1,13 @@
 ---
+id: nsip-docs-workflows-stale
+type: semantic
+created: 2026-03-11T18:02:11Z
+namespace: nsip/docs/workflows
+modified: 2026-03-11T18:02:11Z
+title: "Stale Issue Management Workflow"
 diataxis_type: reference
 ---
+
 # Stale Issue Management Workflow
 
 ## Overview

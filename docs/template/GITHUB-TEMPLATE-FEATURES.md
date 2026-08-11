@@ -1,6 +1,13 @@
 ---
+id: nsip-docs-template-github-template-features
+type: semantic
+created: 2026-02-07T14:26:06-05:00
+namespace: nsip/docs/template
+modified: 2026-03-10T17:32:23Z
+title: "GitHub Template Repository Features"
 diataxis_type: reference
 ---
+
 # GitHub Template Repository Features
 
 > What copies when someone clicks **"Use this template"** — and what doesn't.

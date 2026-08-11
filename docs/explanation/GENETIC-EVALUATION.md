@@ -1,6 +1,13 @@
 ---
+id: nsip-docs-explanation-genetic-evaluation
+type: semantic
+created: 2026-02-16T17:53:10-05:00
+namespace: nsip/docs/explanation
+modified: 2026-06-01T23:16:34-04:00
+title: "Genetic Evaluation"
 diataxis_type: explanation
 ---
+
 # Genetic Evaluation
 
 > How the NSIP system transforms raw performance data into Estimated Breeding Values using BLUP, and why the methodology matters for breeding decisions.

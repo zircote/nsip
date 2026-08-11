@@ -1,6 +1,13 @@
 ---
+id: nsip-docs-ux-shell-completions
+type: semantic
+created: 2026-02-07T14:26:06-05:00
+namespace: nsip/docs/ux
+modified: 2026-06-01T23:16:34-04:00
+title: "Shell Completions"
 diataxis_type: reference
 ---
+
 # Shell Completions
 
 ## Overview

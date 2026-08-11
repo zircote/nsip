@@ -1,6 +1,13 @@
 ---
+id: nsip-docs-explanation-ebv-explained
+type: semantic
+created: 2026-02-16T19:14:55Z
+namespace: nsip/docs/explanation
+modified: 2026-06-01T23:16:34-04:00
+title: "Understanding Estimated Breeding Values (EBVs)"
 diataxis_type: explanation
 ---
+
 # Understanding Estimated Breeding Values (EBVs)
 
 > EBVs are the foundation of genetic improvement in sheep. This guide explains what they are, how they work, and why they matter for breeding decisions.

@@ -1,6 +1,13 @@
 ---
+id: nsip-docs-tutorials-getting-started
+type: semantic
+created: 2026-02-16T19:14:55Z
+namespace: nsip/docs/tutorials
+modified: 2026-06-01T23:16:34-04:00
+title: "Getting Started with NSIP"
 diataxis_type: tutorial
 ---
+
 # Getting Started with NSIP
 
 > **Learning Goal:** By the end of this tutorial, you will have a working Rust program that connects to the NSIP Search API, lists sheep breed groups, searches for animals, and retrieves detailed genetic data.

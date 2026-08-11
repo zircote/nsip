@@ -1,6 +1,13 @@
 ---
+id: nsip-docs-template-getting-started
+type: procedural
+created: 2026-02-07T14:26:06-05:00
+namespace: nsip/docs/template
+modified: 2026-06-12T10:25:52-04:00
+title: "Getting Started"
 diataxis_type: tutorial
 ---
+
 # Getting Started
 
 > You just created a repository from **zircote/nsip**. This guide walks you through every step from creation to your first green CI run.

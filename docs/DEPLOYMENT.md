@@ -1,6 +1,21 @@
 ---
+id: nsip-docs-deployment
+type: procedural
+created: 2026-02-07T14:26:06-05:00
+namespace: nsip/docs
+modified: '2026-08-11T16:22:00.358Z'
+title: "Deployment Guide"
 diataxis_type: how-to
+provenance:
+  '@type': Provenance
+  agent: claude-code/claude-sonnet-5
+  wasGeneratedBy:
+    '@id': urn:mif:activity:claude-code-session:f2ea9348-10db-44af-9ccb-a37844b8c1f2
+    '@type': prov:Activity
+  trustLevel: user_stated
+  agentVersion: 2.1.227
 ---
+
 # Deployment Guide
 
 This document provides comprehensive deployment instructions for the nsip project.
@@ -24,6 +39,8 @@ Configure these secrets in GitHub repository settings (Settings → Secrets and 
    - Repo `zircote/nsip`, workflow `publish.yml`, environment `copilot`
 
 2. **GITHUB_TOKEN** - Automatically provided by GitHub Actions (no setup needed)
+
+3. **HOMEBREW_TAP_TOKEN** - Fine-grained PAT with `contents:write` on `zircote/homebrew-tap`, stored in the `copilot` environment; used by `package-homebrew.yml` to push updated tap formulae
 
 ### GitHub Packages
 
@@ -99,6 +116,16 @@ Pushing the tag automatically triggers:
 4. **Publish Workflow** (`publish.yml`)
    - Runs all pre-publish checks
    - Publishes to crates.io
+
+5. **Homebrew Workflow** (`package-homebrew.yml`)
+   - Triggered by the published GitHub release
+   - Regenerates `nsip.rb` and `nsip-source.rb` in `zircote/homebrew-tap`
+
+6. **Back-Merge Workflow** (`back-merge.yml`)
+   - Opens and auto-merges a `main` → `develop` PR
+   - No manual step required
+
+See [`docs/runbooks/RELEASING.md`](runbooks/RELEASING.md) for the full step-by-step procedure, including rollback and troubleshooting.
 
 ## Deployment Targets
 
@@ -226,7 +253,7 @@ Images are immutable; use previous version tags:
 docker pull ghcr.io/zircote/nsip:v0.6.0
 ```
 
-### crates.io
+### crates.io Rollback
 
 **Cannot unpublish** - crates.io doesn't allow unpublishing. Options:
 

@@ -1,6 +1,13 @@
 ---
+id: nsip-docs-workflows-release
+type: semantic
+created: 2026-03-11T16:00:26Z
+namespace: nsip/docs/workflows
+modified: 2026-06-12T10:25:52-04:00
+title: "Release Workflow"
 diataxis_type: reference
 ---
+
 # Release Workflow
 
 ## Overview

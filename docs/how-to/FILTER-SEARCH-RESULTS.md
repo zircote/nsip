@@ -1,6 +1,13 @@
 ---
+id: nsip-docs-how-to-filter-search-results
+type: semantic
+created: 2026-02-16T17:53:10-05:00
+namespace: nsip/docs/how-to
+modified: 2026-03-10T14:36:31Z
+title: "How to Filter Search Results"
 diataxis_type: how-to
 ---
+
 # How to Filter Search Results
 
 > **Problem:** You need to narrow down animals in the NSIP database by breed, gender, status, date range, flock, or trait values.
