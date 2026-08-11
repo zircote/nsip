@@ -1,6 +1,6 @@
 [package]
 name = "nsip"
-version = "0.7.3"
+version = "0.7.4"
 edition = "2024"
 rust-version = "1.92"
 description = "NSIP Search API client for nsipsearch.nsip.org/api"
@@ -74,7 +74,7 @@ clap_complete = "4.6"
 clap_mangen = "0.3"
 
 # MCP server
-rmcp = { version = "2.2", features = [
+rmcp = { version = "3.1", features = [
     "server",
     "transport-io",
     "transport-streamable-http-server",
@@ -89,12 +89,12 @@ tower = "0.5"
 tower-http = { version = "0.7", features = ["cors"] }
 
 # OAuth 2.1
-jsonwebtoken = { version = "10", features = ["rust_crypto"] }
+jsonwebtoken = { version = "11", features = ["rust_crypto"] }
 chrono = { version = "0.4", features = ["serde"] }
 uuid = { version = "1", features = ["v4"] }
 sha2 = "0.11"
 subtle = "2"
-base64 = "0.22"
+base64 = "0.23"
 rand = "0.10"
 
 # Logging

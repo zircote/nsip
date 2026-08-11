@@ -1,6 +1,13 @@
 ---
+id: nsip-docs-how-to-batch-query
+type: semantic
+created: 2026-02-16T17:53:10-05:00
+namespace: nsip/docs/how-to
+modified: 2026-06-01T23:16:34-04:00
+title: "How to Batch Query Multiple Animals"
 diataxis_type: how-to
 ---
+
 # How to Batch Query Multiple Animals
 
 > **Problem:** You need to retrieve data for many animals at once, either from a list of LPN IDs or by paginating through search results.

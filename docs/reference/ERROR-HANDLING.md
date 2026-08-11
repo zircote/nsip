@@ -1,6 +1,13 @@
 ---
+id: nsip-docs-reference-error-handling
+type: semantic
+created: 2026-02-16T19:14:55Z
+namespace: nsip/docs/reference
+modified: 2026-06-01T23:16:34-04:00
+title: "Error Handling Reference"
 diataxis_type: reference
 ---
+
 # Error Handling Reference
 
 Complete reference for error handling in the `nsip` crate.

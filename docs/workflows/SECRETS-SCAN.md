@@ -1,6 +1,13 @@
 ---
+id: nsip-docs-workflows-secrets-scan
+type: semantic
+created: 2026-02-07T14:26:06-05:00
+namespace: nsip/docs/workflows
+modified: 2026-06-01T23:16:34-04:00
+title: "Secrets Scanning with Gitleaks"
 diataxis_type: reference
 ---
+
 # Secrets Scanning with Gitleaks
 
 ## Overview

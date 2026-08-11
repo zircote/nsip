@@ -1,6 +1,13 @@
 ---
+id: nsip-docs-observability-metrics-dashboard
+type: semantic
+created: 2026-02-07T14:26:06-05:00
+namespace: nsip/docs/observability
+modified: 2026-06-01T23:16:34-04:00
+title: "Metrics & Observability Dashboard"
 diataxis_type: reference
 ---
+
 # Metrics & Observability Dashboard
 
 ## Overview

@@ -1,6 +1,8 @@
 updates:
 - commit-message:
     prefix: chore(deps)
+  cooldown:
+    default-days: 7
   directory: /
   groups:
     async-runtime:
@@ -38,7 +40,25 @@ updates:
     timezone: America/Chicago
 - commit-message:
     prefix: chore(deps)
+  cooldown:
+    default-days: 7
   directory: /
+  # Known quirk (nsip#364): dependabot has bumped docker/login-action to an
+  # untagged main-branch commit at least once (PR #346), leaving a stale/
+  # misleading trailing `# vX.Y.Z` comment on the uses: pin rather than
+  # landing on a real release tag. Sibling actions bumped in other PRs
+  # (actions/checkout, taiki-e/install-action -- see #351, #354) resolved
+  # correctly, so this is specific to docker/login-action, not a general
+  # dependabot behavior. When reviewing a docker/login-action bump PR,
+  # verify the target SHA matches a real tag
+  # (`gh api repos/docker/login-action/tags`) before merging -- do not
+  # trust the trailing version comment alone.
+  exclude-paths:
+  # gh-aw-generated workflows (gh aw compile). Every action embedded in these
+  # files -- not just github/gh-aw-actions/** -- is version-locked to the
+  # gh-aw compiler; dependabot hand-editing them would be silently reverted
+  # the next time someone runs `gh aw compile`. See #363.
+  - ".github/workflows/*.lock.yml"
   groups:
     github-actions:
       patterns:
@@ -47,7 +67,10 @@ updates:
       - minor
       - patch
   ignore:
-  - dependency-name: "github/gh-aw-actions/**" # Managed by gh aw compile. Version-locked to the gh-aw compiler; do not bump.
+  # Belt-and-suspenders alongside exclude-paths above: if github/gh-aw-actions
+  # is ever referenced outside a *.lock.yml file, it stays version-locked to
+  # the gh-aw compiler rather than bumped by dependabot.
+  - dependency-name: "github/gh-aw-actions/**"
   labels:
   - dependencies
   - github-actions

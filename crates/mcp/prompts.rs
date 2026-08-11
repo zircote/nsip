@@ -42,11 +42,7 @@ pub fn list_prompts() -> ListPromptsResult {
         prompt_interpret_ebvs(),
     ];
 
-    ListPromptsResult {
-        meta: None,
-        prompts,
-        next_cursor: None,
-    }
+    ListPromptsResult::with_all_items(prompts)
 }
 
 fn prompt_evaluate_ram() -> Prompt {

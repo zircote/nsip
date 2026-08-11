@@ -1,6 +1,13 @@
 ---
+id: nsip-docs-workflows-ci
+type: semantic
+created: 2026-03-11T16:00:26Z
+namespace: nsip/docs/workflows
+modified: 2026-05-29T21:57:25-04:00
+title: "CI Pipeline"
 diataxis_type: reference
 ---
+
 # CI Pipeline
 
 ## Overview

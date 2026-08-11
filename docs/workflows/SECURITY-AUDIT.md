@@ -1,6 +1,13 @@
 ---
+id: nsip-docs-workflows-security-audit
+type: semantic
+created: 2026-03-11T16:00:26Z
+namespace: nsip/docs/workflows
+modified: 2026-03-11T16:00:26Z
+title: "Security Audit Workflow"
 diataxis_type: reference
 ---
+
 # Security Audit Workflow
 
 ## Overview

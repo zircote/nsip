@@ -7,11 +7,15 @@
 
 ## When it occurs
 
-A paginated MCP list request (`tools/list`, `resources/list`,
-`resources/templates/list`, `prompts/list`) was given a `cursor` that could
-not be decoded as an offset, or whose offset was past the end of the result
-set. Cursors are opaque tokens returned in a prior page's `nextCursor`; they
-must not be synthesized or mutated. (JSON-RPC code: `invalid_params` / -32602.)
+A paginated MCP list request (`prompts/list`, `resources/list`,
+`resources/templates/list`) was given a `cursor` that could not be decoded
+as an offset, or whose offset was past the end of the result set. Cursors
+are opaque tokens returned in a prior page's `nextCursor`; they must not be
+synthesized or mutated. (JSON-RPC code: `invalid_params` / -32602.)
+
+`tools/list` is not paginated -- it always returns the complete tool set in
+a single response and never validates a `cursor`, so this error cannot occur
+there. See [Pagination](../../../MCP.md#pagination) for the full contract.
 
 ## Recovery
 

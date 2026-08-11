@@ -1,11 +1,26 @@
 ---
+id: nsip-docs-mcp
+type: semantic
+created: 2026-02-07T23:47:38-05:00
+namespace: nsip/docs
+modified: '2026-08-11T19:29:43.700Z'
+title: "NSIP MCP Server Reference"
 diataxis_type: reference
+provenance:
+  '@type': Provenance
+  agent: claude-code/claude-sonnet-5
+  wasGeneratedBy:
+    '@id': urn:mif:activity:claude-code-session:f2ea9348-10db-44af-9ccb-a37844b8c1f2
+    '@type': prov:Activity
+  trustLevel: user_stated
+  agentVersion: 2.1.227
 ---
+
 # NSIP MCP Server Reference
 
 The `nsip` binary ships a built-in [Model Context Protocol](https://modelcontextprotocol.io/) (MCP) server that exposes the full NSIP Search API surface -- plus analytics-powered breeding intelligence -- to any MCP-compatible client (Claude Desktop, Claude Code, Cursor, etc.).
 
-**Capabilities:** 13 tools, 5 static resources, 4 resource templates, 7 guided prompts, elicitation, cursor-based pagination
+**Capabilities:** 13 tools, 5 static resources, 4 resource templates, 7 guided prompts, [elicitation](#elicitation) (client-negotiated), [cursor-based pagination](#pagination)
 **Protocol version:** `2025-11-25` (MCP LATEST)
 **Transports:** stdio, streamable HTTP (SSE)
 
@@ -18,6 +33,8 @@ The `nsip` binary ships a built-in [Model Context Protocol](https://modelcontext
 - [Tool Reference](#tool-reference)
 - [Resource Reference](#resource-reference)
 - [Prompt Reference](#prompt-reference)
+- [Elicitation](#elicitation)
+- [Pagination](#pagination)
 - [Analytics Reference](#analytics-reference)
 - [EBV Trait Glossary](#ebv-trait-glossary)
 
@@ -653,6 +670,8 @@ Compare multiple animals side-by-side with trait-by-trait analysis. Fetches deta
 |--------------|----------|-----------------------------------------------------|
 | `lpn_ids` | yes      | Comma-separated LPN IDs of animals to compare (2-5) |
 
+Once the required arguments resolve, this prompt sends a follow-up `ComparePreferences` [elicitation](#elicitation) request asking which traits to focus on. It is optional -- see [Elicitation](#elicitation) for the schema and what happens if the client or user doesn't respond.
+
 ---
 
 ### plan-mating
@@ -664,6 +683,8 @@ Plan a specific mating. Fetches details and lineage for both sire and dam, calcu
 | `sire_id` | yes      | LPN ID of the sire    |
 | `dam_id`  | yes      | LPN ID of the dam     |
 
+After fetching sire/dam data and computing COI, this prompt sends a follow-up `MatingConstraints` [elicitation](#elicitation) request asking for a max COI and breeding objective. It is optional -- see [Elicitation](#elicitation).
+
 ---
 
 ### flock-improvement
@@ -674,6 +695,8 @@ Analyze a breed or flock for trait gaps and improvement opportunities. Fetches c
 |------------|----------|----------------------------------------|
 | `breed_id` | yes      | Breed ID to analyze                    |
 | `flock_id` | no       | Optional flock ID to narrow analysis   |
+
+After fetching the breed/flock sample and trait ranges, this prompt sends a follow-up `FlockContext` [elicitation](#elicitation) request asking for the breeding objective and flock size. It is optional -- see [Elicitation](#elicitation).
 
 ---
 
@@ -687,6 +710,8 @@ Find top replacement candidates within a breed. Searches by gender and sorts by 
 | `gender`       | yes      | Gender of replacement animals (`"Male"` or `"Female"`) |
 | `target_trait` | yes      | Primary trait to optimize (e.g. `"WWT"`, `"NLB"`)      |
 
+Before searching, this prompt sends a follow-up `SelectionCriteria` [elicitation](#elicitation) request asking for a minimum accuracy and priority traits. It is optional -- see [Elicitation](#elicitation).
+
 ---
 
 ### interpret-ebvs
@@ -696,6 +721,84 @@ Plain-language EBV explanation. Fetches the animal's details and the full EBV gl
 | Argument | Required | Description                    |
 |----------|----------|--------------------------------|
 | `lpn_id` | yes      | LPN ID of the animal           |
+
+---
+
+## Elicitation
+
+Four of the seven guided prompts -- [`compare-breeding-stock`](#compare-breeding-stock), [`plan-mating`](#plan-mating), [`flock-improvement`](#flock-improvement), and [`select-replacement`](#select-replacement) -- send a follow-up [MCP elicitation](https://modelcontextprotocol.io/specification/2025-11-25/client/elicitation) request once their required arguments resolve, asking the user for optional extra context that steers the analysis. Where in the prompt the request is sent varies -- `compare-breeding-stock` and `select-replacement` elicit before fetching any data, while `plan-mating` and `flock-improvement` elicit after their API calls complete. Each prompt's entry under [Prompt Reference](#prompt-reference) states which.
+
+Elicitation is a **client** capability, not a server one: `get_info()` only declares `tools`, `prompts`, and `resources` in `ServerCapabilities`. The server issues an `elicitation/create` request over the existing session, and it only reaches the user if the client declared the `elicitation` capability at initialize.
+
+### Degradation is silent, never an error
+
+If the client didn't declare elicitation support, or the user declines or cancels the request, the affected prompt proceeds **without** the extra context. This is not an error -- the prompt still returns a result built from its required arguments alone. All of the following collapse to "proceed without elicited data":
+
+| Condition                                            | Result                      |
+|-------------------------------------------------------|------------------------------|
+| Client did not declare the `elicitation` capability    | Prompt proceeds without it  |
+| User declines the request                              | Prompt proceeds without it  |
+| User cancels/dismisses the request                     | Prompt proceeds without it  |
+| Client returns no content                              | Prompt proceeds without it  |
+
+Any other failure while eliciting (a transport error, a response that fails to parse) is logged server-side and also degrades to "proceed without it" -- an elicitation failure never surfaces as a tool/prompt error to the caller.
+
+### Schemas
+
+Each prompt elicits one flat JSON object with every field optional; an empty submission (`{}`) is valid for all four.
+
+#### `ComparePreferences` -- used by `compare-breeding-stock`
+
+Elicitation message: *"Which traits should the comparison focus on?"*
+
+| Field    | Type   | Required | Description                                                            |
+|----------|--------|----------|--------------------------------------------------------------------------|
+| `traits` | string | no       | Comma-separated trait abbreviations to focus on (e.g. `"WWT,YWT,NLB"`) |
+
+#### `MatingConstraints` -- used by `plan-mating`
+
+Elicitation message: *"Any breeding constraints for this mating? (max COI, breeding objective)"*
+
+| Field                 | Type   | Required | Description                                          |
+|-----------------------|--------|----------|---------------------------------------------------------|
+| `max_coi`             | number | no       | Maximum acceptable coefficient of inbreeding (0.0-1.0) |
+| `breeding_objective`  | string | no       | `"Growth"`, `"Maternal"`, or `"Dual"`                   |
+
+#### `FlockContext` -- used by `flock-improvement`
+
+Elicitation message: *"Tell us about your flock goals (breeding objective, flock size)"*
+
+| Field                 | Type    | Required | Description                                     |
+|-----------------------|---------|----------|----------------------------------------------------|
+| `breeding_objective`  | string  | no       | `"Growth"`, `"Maternal"`, or `"Dual"`              |
+| `flock_size`          | integer | no       | Approximate flock size (number of breeding ewes)  |
+
+#### `SelectionCriteria` -- used by `select-replacement`
+
+Elicitation message: *"Any selection criteria? (minimum accuracy, priority traits)"*
+
+| Field             | Type    | Required | Description                                     |
+|-------------------|---------|----------|-----------------------------------------------------|
+| `min_accuracy`    | integer | no       | Minimum accuracy percentage to require (0-100)     |
+| `priority_traits` | string  | no       | Comma-separated priority traits (e.g. `"WWT,NLB"`) |
+
+Elicited values, when provided, reach the LLM in one of two ways. `plan-mating`, `flock-improvement`, and `select-replacement` fold them into a `user_constraints` / `user_context` / `user_criteria` key in the JSON block alongside the fetched animal data; `compare-breeding-stock` instead appends the requested traits to its instruction text as a "Focus especially on these traits" line, with no `user_*` key. Either way they only steer the LLM's analysis -- they never change which API calls the prompt itself makes.
+
+---
+
+## Pagination
+
+Three list operations use cursor-based pagination: [`prompts/list`](#prompt-reference), [`resources/list`](#resource-reference), and `resources/templates/list` (the wire method name for [resource templates](#resource-templates)). `tools/list` does **not** paginate -- it always returns the complete, current tool set (filtered only by `--tools`, see [Tool Sets](#tool-sets)) in a single response with `nextCursor` absent, regardless of any `cursor` sent with the request.
+
+- **Page size:** fixed at 25 items per page, not configurable.
+- **Cursor:** an opaque token returned as `nextCursor` on a page that has more results after it. Treat it as opaque -- pass it back verbatim on the next request; never construct, parse, or edit one yourself.
+- **First page:** omit `cursor` (or send no pagination params at all) to start from the beginning.
+- **Last page:** `nextCursor` is absent once the final page has been returned.
+- **Invalid cursor:** a cursor the server can't accept -- malformed, or pointing past the end of the result set -- is rejected with the [`mcp/invalid-cursor`](reference/errors/mcp/invalid-cursor.md) error; see the [Error Envelope reference](reference/ERROR-ENVELOPE.md) for the full response shape.
+
+At the server's current counts (13 tools, 5 static resources, 4 resource templates, 7 prompts), every list fits inside one 25-item page, so `nextCursor` is always absent today. Clients should still implement cursor-following: these counts grow as the server adds tools, resources, and prompts, and a client that assumes a single page will silently miss later results once a list operation actually needs a second page.
+
+This is separate from the `page` / `page_size` **tool parameters** on `search` and `progeny` (see [Tool Reference](#tool-reference)), which paginate the NSIP API's own animal result sets, not the MCP list-operations described here.
 
 ---
 

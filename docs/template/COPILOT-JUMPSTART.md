@@ -1,6 +1,13 @@
 ---
+id: nsip-docs-template-copilot-jumpstart
+type: semantic
+created: 2026-02-07T14:26:06-05:00
+namespace: nsip/docs/template
+modified: 2026-06-01T23:16:34-04:00
+title: "Jumpstart Your Project with Copilot"
 diataxis_type: how-to
 ---
+
 # Jumpstart Your Project with Copilot
 
 When you create a new repository from this template, GitHub offers an optional **"Jumpstart your project with Copilot"** prompt. Paste one of the prompts below into that field, and Copilot will open a pull request that scaffolds your project.

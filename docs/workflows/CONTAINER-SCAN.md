@@ -1,6 +1,13 @@
 ---
+id: nsip-docs-workflows-container-scan
+type: semantic
+created: 2026-02-07T14:26:06-05:00
+namespace: nsip/docs/workflows
+modified: 2026-06-01T23:16:34-04:00
+title: "Container Vulnerability Scanning with Trivy"
 diataxis_type: reference
 ---
+
 # Container Vulnerability Scanning with Trivy
 
 ## Overview

@@ -1,6 +1,13 @@
 ---
+id: nsip-docs-template-configuration
+type: semantic
+created: 2026-02-07T14:26:06-05:00
+namespace: nsip/docs/template
+modified: 2026-06-01T23:16:34-04:00
+title: "Template Configuration Guide"
 diataxis_type: how-to
 ---
+
 # Template Configuration Guide
 
 > How to configure your new repository after creating it from the nsip.

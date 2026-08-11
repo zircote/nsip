@@ -117,3 +117,6 @@ man/
 server/
 *.mcpb
 .fastembed_cache/
+
+# Local audit/report output
+reports/

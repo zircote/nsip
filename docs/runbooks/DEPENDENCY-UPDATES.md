@@ -1,6 +1,21 @@
 ---
+id: nsip-docs-runbooks-dependency-updates
+type: procedural
+created: 2026-02-07T14:26:06-05:00
+namespace: nsip/docs/runbooks
+modified: '2026-08-11T19:34:55.892Z'
+title: "Dependency Updates"
 diataxis_type: how-to
+provenance:
+  '@type': Provenance
+  agent: claude-code/claude-sonnet-5
+  wasGeneratedBy:
+    '@id': urn:mif:activity:claude-code-session:f2ea9348-10db-44af-9ccb-a37844b8c1f2
+    '@type': prov:Activity
+  trustLevel: user_stated
+  agentVersion: 2.1.227
 ---
+
 # Dependency Updates
 
 Runbook for managing Cargo and GitHub Actions dependencies in nsip.
@@ -17,6 +32,7 @@ Dependabot is configured in `.github/dependabot.yml` with two ecosystems:
 |---|---|
 | Schedule | Weekly, Mondays at 09:00 America/Chicago |
 | PR limit | 10 open PRs |
+| Cooldown | 7 days |
 | Commit prefix | `chore(deps)` |
 | Labels | `dependencies`, `rust` |
 | Reviewer | `zircote` |
@@ -35,6 +51,7 @@ Dependabot is configured in `.github/dependabot.yml` with two ecosystems:
 |---|---|
 | Schedule | Weekly, Mondays at 09:00 America/Chicago |
 | PR limit | 5 open PRs |
+| Cooldown | 7 days |
 | Commit prefix | `chore(deps)` |
 | Labels | `dependencies`, `github-actions` |
 | Reviewer | `zircote` |

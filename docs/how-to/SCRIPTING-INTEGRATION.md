@@ -1,6 +1,13 @@
 ---
+id: nsip-docs-how-to-scripting-integration
+type: semantic
+created: 2026-02-16T17:53:10-05:00
+namespace: nsip/docs/how-to
+modified: 2026-06-01T23:16:34-04:00
+title: "How to Integrate NSIP into Scripts and Pipelines"
 diataxis_type: how-to
 ---
+
 # How to Integrate NSIP into Scripts and Pipelines
 
 > **Problem:** You want to automate NSIP data retrieval in shell scripts, CI pipelines, or data processing workflows.

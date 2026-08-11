@@ -1,9 +1,32 @@
 ---
-diataxis_type: how-to
+id: nsip-docs-deployment
+type: semantic
+created: 2026-02-07T14:26:06-05:00
+namespace: nsip/docs
+modified: '2026-08-11T19:08:46.262Z'
+title: "Deployment Guide"
+diataxis_type: reference
+provenance:
+  '@type': Provenance
+  agent: claude-code/claude-sonnet-5
+  wasGeneratedBy:
+    '@id': urn:mif:activity:claude-code-session:f2ea9348-10db-44af-9ccb-a37844b8c1f2
+    '@type': prov:Activity
+  trustLevel: user_stated
+  agentVersion: 2.1.227
 ---
+
 # Deployment Guide
 
-This document provides comprehensive deployment instructions for the nsip project.
+This document is a reference for the nsip project's deployment targets and
+distribution channels — where releases land and how consumers install them.
+
+**Scope boundary:** this document does not duplicate the release procedure.
+[`docs/runbooks/RELEASING.md`](runbooks/RELEASING.md) is the single
+authoritative source for how to cut, monitor, roll back, and troubleshoot a
+release; it links back here for the broader distribution overview. If a
+detail about "how to release" here and in RELEASING.md ever disagree,
+RELEASING.md wins — file a docs bug rather than trusting this page's copy.
 
 ## Overview
 
@@ -15,90 +38,17 @@ The project includes automated deployment workflows for:
 
 ## Prerequisites
 
-### Required Secrets
-
-Configure these secrets in GitHub repository settings (Settings → Secrets and variables → Actions):
-
-1. **crates.io Trusted Publishing** - publishing uses OIDC, not a stored token
-   - Configure at: crates.io → crate Settings → Trusted Publishing
-   - Repo `zircote/nsip`, workflow `publish.yml`, environment `copilot`
-
-2. **GITHUB_TOKEN** - Automatically provided by GitHub Actions (no setup needed)
-
-### GitHub Packages
-
-Enable GitHub Packages for Docker image publishing:
-- Settings → Actions → General → Workflow permissions → "Read and write permissions"
+See [`docs/runbooks/RELEASING.md#prerequisites`](runbooks/RELEASING.md#prerequisites)
+for the authoritative list of required secrets and permissions
+(`HOMEBREW_TAP_TOKEN`, crates.io Trusted Publishing, `GITHUB_TOKEN`, and the
+GitHub Packages workflow permission needed for Docker publishing).
 
 ## Creating a Release
 
-### 1. Prepare Release
-
-Update version in `Cargo.toml`:
-
-```toml
-[package]
-version = "0.6.0"  # Update this
-```
-
-Run checks locally:
-
-```bash
-cargo fmt -- --check
-cargo clippy --all-targets --all-features -- -D warnings
-cargo test --all-features
-cargo deny check
-```
-
-### 2. Open and Merge the Release PR
-
-`develop` is the active development branch and `main` is the stable/release
-branch. Never tag from `develop`. Promote the release through `main` first.
-
-```bash
-# Commit the version bump on develop
-git add Cargo.toml
-git commit -m "chore: bump version to 0.6.0"
-git push origin develop
-```
-
-Open a release PR from `develop` into `main` (the `release-pr.yml` workflow can
-open or update it via `workflow_dispatch`), let CI pass, then merge it.
-
-### 3. Tag the Release on `main`
-
-Tag the `main` merge commit and push the tag. The tag — not a branch push —
-triggers the release automation.
-
-```bash
-git checkout main
-git pull origin main
-
-# Create the annotated tag on the main merge commit
-git tag -a v0.6.0 -m "Release v0.6.0"
-git push origin v0.6.0
-```
-
-### 4. Automated Workflows
-
-Pushing the tag automatically triggers:
-
-1. **Release Workflow** (`release.yml`)
-   - Builds binaries for all platforms
-   - Generates changelog from commits
-   - Creates GitHub release with artifacts
-
-2. **Changelog Workflow** (`changelog.yml`)
-   - Updates CHANGELOG.md
-   - Opens a PR into the develop branch
-
-3. **Docker Workflow** (`docker.yml`)
-   - Builds multi-platform images
-   - Pushes to ghcr.io with version tag and 'latest'
-
-4. **Publish Workflow** (`publish.yml`)
-   - Runs all pre-publish checks
-   - Publishes to crates.io
+The step-by-step release procedure — version bump, promoting `develop` to
+`main`, tagging, pushing, and the workflows a tag push triggers — lives in
+[`docs/runbooks/RELEASING.md`](runbooks/RELEASING.md#step-by-step-promote-tag-and-push-a-release).
+That runbook also covers monitoring, rollback, and troubleshooting.
 
 ## Deployment Targets
 
@@ -116,10 +66,10 @@ Pushing the tag automatically triggers:
 **Download Example:**
 
 ```bash
-# Linux
-wget https://github.com/zircote/nsip/releases/download/v0.6.0/nsip-0.6.0-linux-amd64
-chmod +x nsip-0.6.0-linux-amd64
-./nsip-0.6.0-linux-amd64 --version
+# Linux (X.Y.Z = the release version, e.g. 0.7.3)
+wget https://github.com/zircote/nsip/releases/download/vX.Y.Z/nsip-X.Y.Z-linux-amd64
+chmod +x nsip-X.Y.Z-linux-amd64
+./nsip-X.Y.Z-linux-amd64 --version
 ```
 
 ### Docker (GitHub Container Registry)
@@ -137,9 +87,9 @@ chmod +x nsip-0.6.0-linux-amd64
 docker pull ghcr.io/zircote/nsip:latest
 docker run --rm ghcr.io/zircote/nsip:latest --version
 
-# Specific version
-docker pull ghcr.io/zircote/nsip:v0.6.0
-docker run --rm ghcr.io/zircote/nsip:v0.6.0 --version
+# Specific version (X.Y.Z = the release version, e.g. 0.7.3)
+docker pull ghcr.io/zircote/nsip:vX.Y.Z
+docker run --rm ghcr.io/zircote/nsip:vX.Y.Z --version
 
 # With volumes
 docker run --rm -v $(pwd):/data ghcr.io/zircote/nsip:latest
@@ -161,8 +111,8 @@ docker run --rm -v $(pwd):/data ghcr.io/zircote/nsip:latest
 # Latest version
 cargo install nsip
 
-# Specific version
-cargo install nsip@0.6.0
+# Specific version (X.Y.Z = the release version, e.g. 0.7.3)
+cargo install nsip@X.Y.Z
 
 # From source
 cargo install --git https://github.com/zircote/nsip
@@ -172,156 +122,38 @@ cargo install --git https://github.com/zircote/nsip
 
 ```toml
 [dependencies]
-nsip = "0.6"
+nsip = "0.7"
 ```
 
 ## Versioning
 
-This project follows [Semantic Versioning](https://semver.org/):
-
-- **MAJOR** (1.0.0) - Incompatible API changes
-- **MINOR** (0.1.0) - Backwards-compatible functionality
-- **PATCH** (0.0.1) - Backwards-compatible bug fixes
+This project follows [Semantic Versioning 2.0.0](https://semver.org/) — see
+[`docs/runbooks/RELEASING.md#version-numbering-semver`](runbooks/RELEASING.md#version-numbering-semver)
+for the full policy, including the pre-1.0 exception.
 
 ## Changelog
 
-Changelogs are automatically generated from conventional commits:
-
-- `feat:` → Added section
-- `fix:` → Fixed section
-- `docs:` → Documentation section
-- `perf:` → Performance section
-- `refactor:` → Refactored section
-- `test:` → Testing section
-- `chore:` → Miscellaneous section
-
-**Example Commit:**
-
-```bash
-git commit -m "feat(auth): add JWT token validation"
-```
-
-## Rollback
-
-### GitHub Release
-
-Delete the release and tag:
-
-```bash
-# Delete remote tag
-git push --delete origin v0.6.0
-
-# Delete local tag
-git tag -d v0.6.0
-
-# Delete release via GitHub UI or gh CLI
-gh release delete v0.6.0
-```
-
-### Docker
-
-Images are immutable; use previous version tags:
-
-```bash
-docker pull ghcr.io/zircote/nsip:v0.6.0
-```
-
-### crates.io
-
-**Cannot unpublish** - crates.io doesn't allow unpublishing. Options:
-
-1. Yank the version (prevents new projects from using it):
-   ```bash
-   cargo yank --vers 0.6.0
-   ```
-
-2. Publish a patch version with fixes:
-   ```bash
-   # Update to X.Y.Z+1
-   git tag -a vX.Y.Z -m "Release vX.Y.Z (fixes vA.B.C)"
-   git push origin vX.Y.Z
-   ```
+Changelogs are generated automatically from conventional commits by
+[git-cliff](https://git-cliff.org/) — see
+[`docs/runbooks/RELEASING.md#changelog-generation`](runbooks/RELEASING.md#changelog-generation)
+for the commit-prefix-to-section mapping.
 
 ## Monitoring
 
-### GitHub Actions
+Release-workflow monitoring (which jobs run, expected duration, what to
+watch for) lives in
+[`docs/runbooks/RELEASING.md#monitoring-workflow-progress`](runbooks/RELEASING.md#monitoring-workflow-progress).
 
-Monitor workflow runs:
-- Actions tab: https://github.com/zircote/nsip/actions
+Outside the release path:
 
-### Security Audits
+- **Security audits** — daily `cargo audit` scan; see
+  [`docs/workflows/SECURITY-AUDIT.md`](workflows/SECURITY-AUDIT.md)
+- **Dependency updates** — Dependabot policy and manual auditing; see
+  [`docs/runbooks/DEPENDENCY-UPDATES.md`](runbooks/DEPENDENCY-UPDATES.md)
 
-Daily automated security scans run at 00:00 UTC:
-- Workflow: `.github/workflows/security-audit.yml`
-- Uses: cargo-audit
-- Notifications: GitHub Actions UI
+## Rollback and Troubleshooting
 
-### Dependencies
-
-Dependabot automatically opens PRs for:
-- Cargo dependencies
-- GitHub Actions versions
-
-## Troubleshooting
-
-### Release Workflow Fails
-
-**Build Error:**
-- Check Cargo.toml version matches tag
-- Verify MSRV compatibility (1.92+)
-- Test locally: `cargo build --release`
-
-**Cross-compilation Error:**
-- Linux ARM64 requires `gcc-aarch64-linux-gnu`
-- macOS ARM64 requires macOS 11+ runner
-
-### Docker Build Fails
-
-**Context Issue:**
-- Verify .dockerignore excludes target/
-- Check Dockerfile paths match `crates/` structure
-
-**Push Permission:**
-- Verify GitHub Actions workflow permissions
-- Check ghcr.io login succeeds
-
-### Publish to crates.io Fails
-
-**Auth Issue:**
-- Verify the Trusted Publishing config on crates.io matches repo `zircote/nsip`, workflow `publish.yml`, environment `copilot`
-
-**Pre-publish Checks:**
-- All tests must pass
-- No clippy warnings
-- cargo-deny checks must pass
-
-## Best Practices
-
-1. **Test Before Tagging**
-   ```bash
-   cargo build --release
-   cargo test --all-features
-   cargo clippy --all-targets --all-features -- -D warnings
-   ```
-
-2. **Use Conventional Commits**
-   - Enables automatic changelog generation
-   - Clearly communicates changes
-
-3. **Version Bump in Separate Commit**
-   ```bash
-   git commit -m "chore: bump version to 0.6.0"
-   ```
-   Tag only after the `develop` → `main` release PR merges (see steps 2-3):
-   ```bash
-   git tag -a v0.6.0 -m "Release v0.6.0"
-   ```
-
-4. **Monitor Release Progress**
-   - Watch GitHub Actions for workflow completion
-   - Verify artifacts are uploaded
-   - Test Docker image immediately after push
-
-5. **Document Breaking Changes**
-   - Use `BREAKING CHANGE:` in commit body
-   - Update migration guide in CHANGELOG
+Rollback procedures (GitHub Release, Docker, crates.io) and the release
+troubleshooting table live in
+[`docs/runbooks/RELEASING.md`](runbooks/RELEASING.md#rollback-procedures) —
+this document does not maintain a second copy.

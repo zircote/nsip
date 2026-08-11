@@ -1,6 +1,13 @@
 ---
+id: nsip-docs-runbooks-security-response
+type: procedural
+created: 2026-02-07T14:26:06-05:00
+namespace: nsip/docs/runbooks
+modified: 2026-06-12T10:25:52-04:00
+title: "Security Incident Response"
 diataxis_type: how-to
 ---
+
 # Security Incident Response
 
 Runbook for handling security vulnerabilities in nsip. Based on the project's [Security Policy](../../SECURITY.md).

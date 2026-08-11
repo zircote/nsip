@@ -1,6 +1,21 @@
 ---
+id: nsip-docs-distribution-docker-registries
+type: semantic
+created: 2026-02-07T14:26:06-05:00
+namespace: nsip/docs/distribution
+modified: '2026-08-11T16:10:02.291Z'
+title: "Docker Multi-Registry Distribution"
 diataxis_type: reference
+provenance:
+  '@type': Provenance
+  agent: claude-code/claude-sonnet-5
+  wasGeneratedBy:
+    '@id': urn:mif:activity:claude-code-session:f2ea9348-10db-44af-9ccb-a37844b8c1f2
+    '@type': prov:Activity
+  trustLevel: user_stated
+  agentVersion: 2.1.227
 ---
+
 # Docker Multi-Registry Distribution
 
 ## Overview
@@ -266,14 +281,14 @@ Add provenance and SBOM:
 
 ## Registry-Specific Features
 
-### Docker Hub
+### Docker Hub Features
 
 - **Auto README sync** - Updates description from GitHub README
 - **Webhooks** - Trigger on image push
 - **Vulnerability scanning** - Free for public images
 - **Download stats** - Track pull metrics
 
-### GitHub Container Registry
+### GitHub Container Registry Features
 
 - **Tight integration** - Links to repository automatically
 - **Package permissions** - Inherit repo permissions

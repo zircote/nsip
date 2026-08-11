@@ -21,9 +21,9 @@ use rmcp::{
     ErrorData as McpError, ServerHandler,
     handler::server::router::tool::ToolRouter,
     model::{
-        GetPromptRequestParams, GetPromptResult, ListPromptsResult, ListResourceTemplatesResult,
+        GetPromptRequestParams, GetPromptResponse, ListPromptsResult, ListResourceTemplatesResult,
         ListResourcesResult, PaginatedRequestParams, ProtocolVersion, ReadResourceRequestParams,
-        ReadResourceResult, ServerCapabilities, ServerInfo, SubscribeRequestParams,
+        ReadResourceResponse, ServerCapabilities, ServerInfo, SubscribeRequestParams,
         UnsubscribeRequestParams,
     },
     service::{NotificationContext, RequestContext},
@@ -159,9 +159,8 @@ impl ServerHandler for NsipServer {
         let cursor = request.as_ref().and_then(|r| r.cursor.as_deref());
         let (page, next_cursor) = paginate(&all.prompts, cursor, DEFAULT_PAGE_SIZE)?;
         Ok(ListPromptsResult {
-            meta: None,
             next_cursor,
-            prompts: page,
+            ..ListPromptsResult::with_all_items(page)
         })
     }
 
@@ -169,7 +168,7 @@ impl ServerHandler for NsipServer {
         &self,
         request: GetPromptRequestParams,
         context: RequestContext<rmcp::service::RoleServer>,
-    ) -> Result<GetPromptResult, McpError> {
+    ) -> Result<GetPromptResponse, McpError> {
         let arguments: HashMap<String, String> = request
             .arguments
             .unwrap_or_default()
@@ -183,7 +182,9 @@ impl ServerHandler for NsipServer {
             })
             .collect();
 
-        prompts::get_prompt(&self.client, &request.name, &arguments, Some(&context)).await
+        prompts::get_prompt(&self.client, &request.name, &arguments, Some(&context))
+            .await
+            .map(Into::into)
     }
 
     // -- Resources -------------------------------------------------------------
@@ -197,9 +198,8 @@ impl ServerHandler for NsipServer {
         let cursor = request.as_ref().and_then(|r| r.cursor.as_deref());
         let (page, next_cursor) = paginate(&all.resources, cursor, DEFAULT_PAGE_SIZE)?;
         Ok(ListResourcesResult {
-            meta: None,
             next_cursor,
-            resources: page,
+            ..ListResourcesResult::with_all_items(page)
         })
     }
 
@@ -212,9 +212,8 @@ impl ServerHandler for NsipServer {
         let cursor = request.as_ref().and_then(|r| r.cursor.as_deref());
         let (page, next_cursor) = paginate(&all.resource_templates, cursor, DEFAULT_PAGE_SIZE)?;
         Ok(ListResourceTemplatesResult {
-            meta: None,
             next_cursor,
-            resource_templates: page,
+            ..ListResourceTemplatesResult::with_all_items(page)
         })
     }
 
@@ -222,8 +221,10 @@ impl ServerHandler for NsipServer {
         &self,
         request: ReadResourceRequestParams,
         _context: RequestContext<rmcp::service::RoleServer>,
-    ) -> Result<ReadResourceResult, McpError> {
-        resources::read_resource(&self.client, &request).await
+    ) -> Result<ReadResourceResponse, McpError> {
+        resources::read_resource(&self.client, &request)
+            .await
+            .map(Into::into)
     }
 
     // -- Lifecycle -------------------------------------------------------------
@@ -395,6 +396,41 @@ mod tests {
         let cloned = server.clone();
         let info = cloned.get_info();
         assert_eq!(info.protocol_version, ProtocolVersion::LATEST);
+    }
+
+    /// Guards the tool-list shape that `docs/MCP.md`'s Pagination section and
+    /// `docs/reference/errors/mcp/invalid-cursor.md` describe: every enabled
+    /// tool comes back from a single `ToolRouter::list_all()` call, and the
+    /// `--tools` filter is applied when the router is built rather than when
+    /// the list is served.
+    ///
+    /// What this asserts is the documented tool count and the
+    /// construction-time filtering -- *not* the absence of a cursor
+    /// parameter. The `#[tool_handler]` macro generates `list_tools` with its
+    /// `PaginatedRequestParams` argument bound to `_request` and `next_cursor`
+    /// hardcoded to `None`, so no cursor can ever reach this module's
+    /// `paginate()` the way `list_prompts`/`list_resources`/
+    /// `list_resource_templates` above do; reaching that generated handler
+    /// from a test would need a live `Peer` for its `RequestContext`, which a
+    /// unit test cannot build. So a future change that routes `tools/list`
+    /// through `paginate()` would leave this test passing while invalidating
+    /// both docs -- update them alongside any such change.
+    #[test]
+    fn tools_list_returns_every_enabled_tool_in_one_call() {
+        let server = NsipServer::new();
+        let all = server.tool_router.list_all();
+        assert_eq!(
+            all.len(),
+            13,
+            "expected all 13 tools with no tool-set filter"
+        );
+
+        let filtered = NsipServer::with_tool_sets(tool_sets::EnabledToolSets::from_csv("search"));
+        let filtered_all = filtered.tool_router.list_all();
+        assert!(
+            filtered_all.len() < all.len(),
+            "tool-set filtering happens at router construction, not at list time"
+        );
     }
 
     // --- Paginate tests ---

@@ -1,6 +1,13 @@
 ---
+id: nsip-docs-how-to-configure-client
+type: semantic
+created: 2026-02-16T19:14:55Z
+namespace: nsip/docs/how-to
+modified: 2026-06-01T23:16:34-04:00
+title: "How to Configure the NSIP Client"
 diataxis_type: how-to
 ---
+
 # How to Configure the NSIP Client
 
 > **Problem:** You need to customize the HTTP client for timeouts, retries, or a different API endpoint.

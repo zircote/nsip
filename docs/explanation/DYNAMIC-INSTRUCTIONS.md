@@ -1,6 +1,13 @@
 ---
+id: nsip-docs-explanation-dynamic-instructions
+type: semantic
+created: 2026-03-09T10:36:07-04:00
+namespace: nsip/docs/explanation
+modified: 2026-03-10T14:36:31Z
+title: "Dynamic MCP Server Instructions"
 diataxis_type: explanation
 ---
+
 # Dynamic MCP Server Instructions
 
 > MCP servers describe themselves to clients through an `instructions` field. The NSIP server generates these instructions dynamically so that clients only learn about capabilities they can actually use.

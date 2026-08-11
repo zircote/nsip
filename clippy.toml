@@ -67,6 +67,7 @@ doc-valid-idents = [
     "UUID",
     "UTF",
     "ASCII",
+    "user_stated",
     "macOS",
     "iOS",
     "FreeBSD",

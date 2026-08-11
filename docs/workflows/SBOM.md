@@ -1,6 +1,13 @@
 ---
+id: nsip-docs-workflows-sbom
+type: semantic
+created: 2026-02-07T14:26:06-05:00
+namespace: nsip/docs/workflows
+modified: 2026-06-12T10:25:52-04:00
+title: "Software Bill of Materials (SBOM)"
 diataxis_type: reference
 ---
+
 # Software Bill of Materials (SBOM)
 
 ## Overview
