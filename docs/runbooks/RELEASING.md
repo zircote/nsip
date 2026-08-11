@@ -3,7 +3,7 @@ id: nsip-docs-runbooks-releasing
 type: procedural
 created: 2026-02-07T14:26:06-05:00
 namespace: nsip/docs/runbooks
-modified: '2026-08-11T16:22:13.025Z'
+modified: '2026-08-11T19:07:15.637Z'
 title: "Releasing"
 diataxis_type: how-to
 provenance:
@@ -414,3 +414,5 @@ cargo install --git https://github.com/zircote/nsip
 | Attestation fails | `id-token: write`/`attestations: write` missing on a job | Check the job-level permissions in `release.yml` |
 | Homebrew tap not updated | `HOMEBREW_TAP_TOKEN` expired, or release authored with `GITHUB_TOKEN` | Rotate the PAT; ensure the release job uses the PAT |
 | Tag push doesn't trigger workflows | Tag format wrong | Must match `v*.*.*` pattern exactly (e.g., `v1.0.0`, not `1.0.0`) |
+| Cross-compilation error building the release binary | Missing target toolchain | Linux ARM64 requires `gcc-aarch64-linux-gnu`; macOS ARM64 requires a macOS 11+ runner |
+| Docker build fails on context/path issues | `.dockerignore` or `Dockerfile` path mismatch | Verify `.dockerignore` excludes `target/` and `Dockerfile` paths match the `crates/` structure |
