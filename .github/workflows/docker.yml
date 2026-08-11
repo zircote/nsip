@@ -41,7 +41,7 @@ jobs:
             arch: arm64
     steps:
       - name: Checkout repository
-        uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0  # v7.0.0
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1  # v7.0.1
 
       - name: Set up Docker Buildx
         # yamllint disable-line rule:line-length
@@ -49,7 +49,7 @@ jobs:
 
       - name: Log in to Container Registry
         # yamllint disable-line rule:line-length
-        uses: docker/login-action@3864d6aed8ff134b2ed894ce00c87695c709c870  # v3.4.0
+        uses: docker/login-action@c66a8fcb2472d4283042d726b2a061b43b3f49ab  # v3.4.0
         with:
           registry: ${{ env.REGISTRY }}
           username: ${{ github.actor }}
@@ -119,7 +119,7 @@ jobs:
 
       - name: Log in to Container Registry
         # yamllint disable-line rule:line-length
-        uses: docker/login-action@3864d6aed8ff134b2ed894ce00c87695c709c870  # v3.4.0
+        uses: docker/login-action@c66a8fcb2472d4283042d726b2a061b43b3f49ab  # v3.4.0
         with:
           registry: ${{ env.REGISTRY }}
           username: ${{ github.actor }}
@@ -218,7 +218,7 @@ jobs:
       packages: read
     # zircote/.github main @ 515a4c76 (adds ignore-unfixed input, 2026-06-17)
     uses: >-
-      zircote/.github/.github/workflows/reusable-trivy.yml@5a805176eb4f3f22cba7bb0a25d46dc7306872e3
+      zircote/.github/.github/workflows/reusable-trivy.yml@b2c87d254e899550e543bedea186335b48b9a41e
     with:
       image-ref: >-
         ghcr.io/${{ github.repository }}@${{
