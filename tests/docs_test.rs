@@ -19,7 +19,9 @@ fn docs_dir() -> PathBuf {
 #[allow(clippy::expect_used)] // test-support helper, not production code
 fn read_doc(relative: &str) -> String {
     let path = docs_dir().join(relative);
-    fs::read_to_string(&path).expect("doc file must be readable")
+    fs::read_to_string(&path)
+        .expect("doc file must be readable")
+        .replace("\r\n", "\n")
 }
 
 #[test]
