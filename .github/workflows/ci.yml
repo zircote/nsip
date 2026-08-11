@@ -195,23 +195,19 @@ jobs:
             exit 0
           fi
 
-          # Isolate the github-actions ecosystem update block (the second
-          # entry under `updates:`, ending before the top-level `version:`
-          # key) and pull its exclude-paths glob patterns out of it. This
-          # assumes dependabot.yml's current 2-space block-sequence style
-          # (list items at the same indent as their key); a reformat needs
-          # a matching update here.
-          block=$(awk '
-            /^version:/ { exit }
-            /^- commit-message:/ { c++ }
-            c==2 { print }
-          ' .github/dependabot.yml)
-
-          patterns=$(awk '
-            /^  exclude-paths:/ { grab=1; next }
-            grab && /^  - / { print; next }
-            grab && /^  [a-zA-Z]/ { grab=0 }
-          ' <<<"$block" | sed -E 's/^  - "?([^"]*)"?$/\1/')
+          # Find the github-actions ecosystem update block and read its
+          # `exclude-paths` globs via a real YAML parser so this check doesn't
+          # depend on item ordering or indentation.
+          patterns=""
+          if ! patterns=$(ruby -ryaml -e '
+            cfg = YAML.load_file(ARGV[0])
+            gha = cfg.fetch("updates").find { |u| u["package-ecosystem"] == "github-actions" }
+            exclude = gha && gha["exclude-paths"]
+            exit 1 unless exclude.is_a?(Array) && !exclude.empty?
+            exclude.each { |p| puts p.to_s }
+          ' .github/dependabot.yml); then
+            patterns=""
+          fi
 
           missing=0
           if [ -z "$patterns" ]; then
