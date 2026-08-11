@@ -1,11 +1,11 @@
 //! Regression guard for issue #357: the explanation docs
 //! (`docs/explanation/BREED-GROUPS-AND-TRAITS.md` and
 //! `docs/explanation/EBV-EXPLAINED.md`) previously undercounted the EBV
-//! traits relative to the canonical 16-trait set used by the reference docs
+//! traits relative to the canonical EBV trait set used by the reference docs
 //! (`docs/reference/CLI.md`, `docs/reference/MCP-TOOLS.md`, `docs/MCP.md`)
-//! and the code (`crates/format.rs::TRAIT_ORDER`,
-//! `crates/mcp/analytics.rs::TRAIT_DEFINITIONS`), and both omitted YEMD/YFAT
-//! entirely.
+//! and the code (e.g. `crates/format.rs::TRAIT_ORDER` and
+//! `crates/mcp/analytics.rs::EBV_TRAITS` via `nsip::mcp::analytics::ebv_glossary()`),
+//! and both omitted YEMD/YFAT entirely.
 //!
 //! These tests read the explanation docs from disk and assert every
 //! canonical trait abbreviation is mentioned, so a future trait addition
@@ -82,5 +82,19 @@ fn breed_groups_and_traits_heading_matches_canonical_count() {
         content.contains(&expected),
         "expected heading {expected:?} not found -- trait count in the heading has drifted \
          from the canonical trait list"
+    );
+}
+
+#[test]
+fn canonical_traits_matches_ebv_glossary() {
+    let from_glossary: Vec<&'static str> = nsip::mcp::analytics::ebv_glossary()
+        .into_iter()
+        .map(|t| t.abbreviation)
+        .collect();
+
+    assert_eq!(
+        from_glossary,
+        CANONICAL_TRAITS,
+        "CANONICAL_TRAITS should stay in sync with the canonical EBV glossary"
     );
 }
