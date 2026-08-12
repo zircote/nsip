@@ -413,9 +413,13 @@ jobs:
   # Quality-gate attestation seam — SCA (OSV) and IaC/license (Trivy) verdicts
   # signed over the published source snapshot, then fail-closed verified in the
   # verify job before release. These gates are fast and directly characterize
-  # the shipped source/dependencies; SAST (CodeQL) and posture (Scorecard) are
-  # repo/source-level and enforced at merge in quality-gates.yml, so they are
-  # NOT re-run here. Reusables are SHA-pinned to zircote/.github.
+  # the shipped source/dependencies; SAST (CodeQL) is repo/source-level and
+  # enforced at merge in quality-gates.yml, so it is NOT re-run here. Posture
+  # (Scorecard) also lives in quality-gates.yml, but — because the reusable
+  # Scorecard workflow only runs against the repository's default branch — it
+  # only fires on pushes to develop and the weekly schedule, never on the
+  # push-to-main that lands a release merge; it does not gate this release
+  # path at all. Reusables are SHA-pinned to zircote/.github.
   # ---------------------------------------------------------------------------
   gate-sca:
     name: Gate — SCA (OSV)
